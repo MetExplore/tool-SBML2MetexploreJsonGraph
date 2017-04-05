@@ -13,13 +13,21 @@ public class Reader {
 	
 	private String file;
 	private Model model;
+	private boolean validate;
 
 	public Reader (String filename){
 		this.file=filename;
 		
 	}
 	
+	public Reader (String filename, boolean useValidator){
+		this.file=filename;
+		this.setValidate(useValidator);
+	}
+	
 	public void read() throws XMLStreamException, IOException{
+		
+		// TODO add use of validator => only if offline validator is completed on the JSBML team side
 		File sbmlFile= new File(this.getFile());
 		
 		SBMLDocument doc=SBMLReader.read(sbmlFile);
@@ -45,6 +53,20 @@ public class Reader {
 
 	public void setModel(Model model) {
 		this.model = model;
+	}
+
+	/**
+	 * @return the validate
+	 */
+	public boolean doValidation() {
+		return validate;
+	}
+
+	/**
+	 * @param validate the validate to set
+	 */
+	public void setValidate(boolean validate) {
+		this.validate = validate;
 	}
 	
 }

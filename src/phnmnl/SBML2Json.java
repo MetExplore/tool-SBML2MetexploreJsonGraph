@@ -56,7 +56,7 @@ public class SBML2Json {
 
 	private void convert() {
 		
-		Reader r=new Reader(this.inFile);
+		Reader r=new Reader(this.inFile,this.useValidator);
 		try {
 			r.read();
 			
@@ -68,8 +68,8 @@ public class SBML2Json {
 				conv=new SBML2jsonConverter(r.getModel());
 			}
 			
-			JsonObject j=conv.convert();
-			
+			conv.convert();
+			conv.writeJsonToFile(this.outFile);
 			
 			
 		} catch (XMLStreamException | IOException e) {
