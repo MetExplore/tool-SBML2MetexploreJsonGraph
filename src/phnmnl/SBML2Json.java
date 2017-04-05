@@ -1,8 +1,19 @@
 package phnmnl;
 
+import java.io.IOException;
+
+import javax.xml.stream.XMLStreamException;
+
 import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
 import org.kohsuke.args4j.Option;
+
+import com.google.gson.JsonObject;
+
+import phnmnl.sbml.Reader;
+import phnmnl.sbml.converter.AbstractConverter;
+import phnmnl.sbml.converter.FBC2toJsonConverter;
+import phnmnl.sbml.converter.SBML2jsonConverter;
 
 public class SBML2Json {
 
@@ -11,6 +22,9 @@ public class SBML2Json {
 
 	@Option(name = "-inFile", usage = "[Required] Input SBML file.", required = true)
 	public String inFile = null;
+	
+	@Option(name = "-validate", usage = "Validate input SBML file. Default to false")
+	public boolean useValidator=false;
 
 	@Option(name = "-outFile", usage = "[Required] Output json file name.", required = true)
 	public String outFile;
@@ -42,7 +56,25 @@ public class SBML2Json {
 
 	private void convert() {
 		
-		
+		Reader r=new Reader(this.inFile);
+		try {
+			r.read();
+			
+			AbstractConverter conv;
+			
+			if(r.isFBCModel()){
+				conv=new FBC2toJsonConverter(r.getModel());
+			}else{
+				conv=new SBML2jsonConverter(r.getModel());
+			}
+			
+			JsonObject j=conv.convert();
+			
+			
+			
+		} catch (XMLStreamException | IOException e) {
+			e.printStackTrace();
+		}
 		
 	}
 }

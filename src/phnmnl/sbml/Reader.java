@@ -12,18 +12,23 @@ import org.sbml.jsbml.SBMLReader;
 public class Reader {
 	
 	private String file;
+	private Model model;
 
 	public Reader (String filename){
 		this.file=filename;
 		
 	}
 	
-	public Model read() throws XMLStreamException, IOException{
+	public void read() throws XMLStreamException, IOException{
 		File sbmlFile= new File(this.getFile());
 		
 		SBMLDocument doc=SBMLReader.read(sbmlFile);
 		
-		return doc.getModel();
+		this.model= doc.getModel();
+	}
+	
+	public boolean isFBCModel(){
+		return model.isPackageURIEnabled("http://www.sbml.org/sbml/level3/version1/fbc/version2");
 	}
 
 	public String getFile() {
@@ -32,6 +37,14 @@ public class Reader {
 
 	public void setFile(String file) {
 		this.file = file;
+	}
+
+	public Model getModel() {
+		return model;
+	}
+
+	public void setModel(Model model) {
+		this.model = model;
 	}
 	
 }

@@ -4,11 +4,10 @@ import org.sbml.jsbml.Model;
 
 import com.google.gson.JsonObject;
 
-public class FBC2toJsonConverter extends AbstractConverter {
-	
-	
-	public FBC2toJsonConverter(Model m){
-		super(m);
+public class SBML2jsonConverter extends AbstractConverter {
+
+	public SBML2jsonConverter(Model m){
+		super (m);
 	}
 
 	@Override
@@ -16,4 +15,5 @@ public class FBC2toJsonConverter extends AbstractConverter {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
 }
