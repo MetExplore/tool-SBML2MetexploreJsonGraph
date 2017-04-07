@@ -2,6 +2,8 @@ package phnmnl.sbml.converter;
 
 import org.sbml.jsbml.Model;
 import org.sbml.jsbml.Reaction;
+import org.sbml.jsbml.Species;
+import org.sbml.jsbml.SpeciesReference;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -31,7 +33,27 @@ public abstract class AbstractConverter {
 			nodes.add(reactionNode);
 			int reactionindex=nodes.size()-1;
 			
-			//TODO look in jsbml if index of reactions and metabolites can be retrieved from somewhere
+			/*
+			 * Reactant list => "In" links
+			 */
+			for(SpeciesReference sref:jSBMLReaction.getListOfReactants() ){
+				Species s=sref.getSpeciesInstance();
+				
+				// TODO generate notes containing the index values for metabolites
+				
+			}
+			
+			/*
+			 * Product list => "out" links
+			 */
+			for(SpeciesReference sref:jSBMLReaction.getListOfProducts() ){
+				Species s=sref.getSpeciesInstance();
+				
+				
+			}
+			
+			
+			
 			
 		}
 	}
