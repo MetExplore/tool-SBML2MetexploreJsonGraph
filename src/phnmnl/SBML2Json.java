@@ -69,6 +69,7 @@ public class SBML2Json {
 			}
 			
 			conv.convert();
+			//System.err.println(conv.getJson().toString());
 			conv.writeJsonToFile(this.outFile);
 			
 			
