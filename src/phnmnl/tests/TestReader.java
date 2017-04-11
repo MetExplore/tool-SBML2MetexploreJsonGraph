@@ -1,62 +1,73 @@
 package phnmnl.tests;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
 
+import javax.xml.stream.XMLStreamException;
+
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
 
 import phnmnl.sbml.Reader;
+import phnmnl.tests.utils.Dummy;
+import phnmnl.tests.utils.MiniRec2Dummy;
+import phnmnl.tests.utils.UbFluxNEtDummy;
 
 @RunWith(Parameterized.class)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestReader {
 	
-	public String file="test/inputData/miniRec2.xml";
-	public Reader tester;
+	public static Reader tester;
 	
 	
 	@Parameters
-    public static Collection<String[]> data() {
-        return Arrays.asList(new String[][] {
-                 {"test/inputData/miniRec2.xml","test/outputData/ExpectedminiRec2.json" }, 
-                 {"test/inputData/ubFluxNet.sbml", "test/outputData/ExpectedUbFluxNet.sbml" }  
+    public static Collection<Dummy[]> data() {
+        return Arrays.asList(new Dummy[][] {
+                 {new MiniRec2Dummy() }, 
+                 {new UbFluxNEtDummy() }  
            });
     }
 
     @Parameter(0)
-    public /* NOT private */ String fInput;
+    public Dummy inputDummy;
 
-    @Parameter(1)
-    public /* NOT private */ String outputfile;
-	
+
 	@Test
-	public void testReaderString() {
-		fail("Not yet implemented");
+	public void testA_ReaderString() {
+		tester=new Reader(inputDummy.getInputFile());
+		assertNotNull("Failed to instantiate JSBML reader: object is null", tester);
+		
 	}
 
 	@Test
-	public void testRead() {
-		fail("Not yet implemented");
+	public void testB_Read() {
+		try {
+			tester.read();
+		} catch (XMLStreamException e) {
+			e.printStackTrace();
+			fail("XMLStreamException raised");			
+		} catch (IOException e) {
+			e.printStackTrace();
+			fail("IOException raised");
+		}
+		assertNotNull("Read model is null", tester.getModel());
+		inputDummy.testModel(tester.getModel());
 	}
 
 	@Test
-	public void testIsFBCModel() {
-		fail("Not yet implemented");
+	public void testC_IsFBCModel() {
+		assertEquals("Use of FBC module doesn't match dummy parameter",inputDummy.isFbc(),tester.isFBCModel());
 	}
 
-	@Test
-	public void testGetFile() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetModel() {
-		fail("Not yet implemented");
-	}
 
 }
