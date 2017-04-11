@@ -21,7 +21,7 @@ import org.junit.runners.Parameterized.Parameters;
 import phnmnl.sbml.Reader;
 import phnmnl.tests.utils.Dummy;
 import phnmnl.tests.utils.MiniRec2Dummy;
-import phnmnl.tests.utils.UbFluxNEtDummy;
+import phnmnl.tests.utils.UbFluxNetDummy;
 
 @RunWith(Parameterized.class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -34,7 +34,7 @@ public class TestReader {
     public static Collection<Dummy[]> data() {
         return Arrays.asList(new Dummy[][] {
                  {new MiniRec2Dummy() }, 
-                 {new UbFluxNEtDummy() }  
+                 {new UbFluxNetDummy() }  
            });
     }
 
@@ -61,7 +61,8 @@ public class TestReader {
 			fail("IOException raised");
 		}
 		assertNotNull("Read model is null", tester.getModel());
-		inputDummy.testModel(tester.getModel());
+		inputDummy.setModel(tester.getModel());
+		inputDummy.testModel();
 	}
 
 	@Test

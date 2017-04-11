@@ -1,1 +1,795 @@
-{"nodes":[{"biologicalType":"reaction","name":"RE3108","dbIdentifier":"R_RE3108C","reactionReversibility":true,"pathways":["Androgen and estrogen synthesis and metabolism"],"ec":"1.1.1.50","id":0},{"biologicalType":"metabolite","name":"Nicotinamide adenine dinucleotide phosphate","dbIdentifier":"M_nadp_c","compartment":"cytoplasm","isSideCompound":false,"formula":"C21H25N7O17P3","charge":"-3","svg":"","svgWidth":"0","svgHeight":"0","id":1,"pathways":["Androgen and estrogen synthesis and metabolism"]},{"biologicalType":"metabolite","name":"5alpha-androstane-3alpha,17beta-diol","dbIdentifier":"M_CE2209_c","compartment":"cytoplasm","isSideCompound":false,"formula":"C19H32O2","charge":"0","svg":"","svgWidth":"0","svgHeight":"0","id":2,"pathways":["Androgen and estrogen synthesis and metabolism"]},{"biologicalType":"metabolite","name":"proton","dbIdentifier":"M_h_c","compartment":"cytoplasm","isSideCompound":false,"formula":"H","charge":"1","svg":"","svgWidth":"0","svgHeight":"0","id":3,"pathways":["Androgen and estrogen synthesis and metabolism"]},{"biologicalType":"metabolite","name":"17beta-hydroxy-5alpha-androstan-3-one","dbIdentifier":"M_5adtststerone_c","compartment":"cytoplasm","isSideCompound":false,"formula":"C19H30O2","charge":"0","svg":"","svgWidth":"0","svgHeight":"0","id":4,"pathways":["Androgen and estrogen synthesis and metabolism"]},{"biologicalType":"metabolite","name":"Nicotinamide adenine dinucleotide phosphate - reduced","dbIdentifier":"M_nadph_c","compartment":"cytoplasm","isSideCompound":false,"formula":"C21H26N7O17P3","charge":"-4","svg":"","svgWidth":"0","svgHeight":"0","id":5,"pathways":["Androgen and estrogen synthesis and metabolism"]}],"links":[{"id":"1 -- 0","source":1,"target":0,"interaction":"in","reversible":"true"},{"id":"2 -- 0","source":2,"target":0,"interaction":"in","reversible":"true"},{"id":"0 -- 3","source":0,"target":3,"interaction":"out","reversible":"true"},{"id":"0 -- 4","source":0,"target":4,"interaction":"out","reversible":"true"},{"id":"0 -- 5","source":0,"target":5,"interaction":"out","reversible":"true"}],"mappingdata":[{"name":"Flux","targetLabel":"reactionId","mappings":[{"name":"Min","data":[{"node":"R_RE3108C","value":-1000.0}]},{"name":"Max","data":[{"node":"R_RE3108C","value":1000.0}]}]}]}
+{
+	"nodes": [
+		{
+			"biologicalType": "reaction",
+			"name": "Glucose uptake",
+			"dbIdentifier": "R_RglcEx",
+			"reactionReversibility": false,
+			"ec": "NA",
+			"id": 0
+		},
+		{
+			"biologicalType": "metabolite",
+			"name": "Glucose",
+			"dbIdentifier": "M_Glc",
+			"compartment": "None",
+			"isSideCompound": false,
+			"formula": "C6H12O6",
+			"svg": "",
+			"svgWidth": "0",
+			"svgHeight": "0",
+			"id": 1
+		},
+		{
+			"biologicalType": "reaction",
+			"name": "Lactate release",
+			"dbIdentifier": "R_RlacEx",
+			"reactionReversibility": false,
+			"ec": "NA",
+			"id": 2
+		},
+		{
+			"biologicalType": "metabolite",
+			"name": "Lactate",
+			"dbIdentifier": "M_Lac",
+			"compartment": "None",
+			"isSideCompound": false,
+			"formula": "C3H5O3",
+			"svg": "",
+			"svgWidth": "0",
+			"svgHeight": "0",
+			"id": 3
+		},
+		{
+			"biologicalType": "reaction",
+			"name": "Hexokinase",
+			"dbIdentifier": "R_Rhex1",
+			"reactionReversibility": false,
+			"ec": "NA",
+			"id": 4
+		},
+		{
+			"biologicalType": "metabolite",
+			"name": "Glucose 6-phosphate (pool A)",
+			"dbIdentifier": "M_Glc6p_a",
+			"compartment": "None",
+			"isSideCompound": false,
+			"formula": "C6H11O9P",
+			"svg": "",
+			"svgWidth": "0",
+			"svgHeight": "0",
+			"id": 5
+		},
+		{
+			"biologicalType": "reaction",
+			"name": "Glycogen utilization",
+			"dbIdentifier": "R_RglycEx",
+			"reactionReversibility": false,
+			"ec": "NA",
+			"id": 6
+		},
+		{
+			"biologicalType": "reaction",
+			"name": "Difussion between Glucose 6-phosphate pools",
+			"dbIdentifier": "R_Rglc6p_pdif",
+			"reactionReversibility": true,
+			"ec": "NA",
+			"id": 7
+		},
+		{
+			"biologicalType": "metabolite",
+			"name": "Glucose 6-phosphate (pool B)",
+			"dbIdentifier": "M_Glc6p_b",
+			"compartment": "None",
+			"isSideCompound": false,
+			"formula": "C6H11O9P",
+			"svg": "",
+			"svgWidth": "0",
+			"svgHeight": "0",
+			"id": 8
+		},
+		{
+			"biologicalType": "reaction",
+			"name": "Glucose-6-phosphate isomerase",
+			"dbIdentifier": "R_Rpgi",
+			"reactionReversibility": true,
+			"ec": "NA",
+			"id": 9
+		},
+		{
+			"biologicalType": "metabolite",
+			"name": "Fructose 6-phosphate",
+			"dbIdentifier": "M_Fru6p",
+			"compartment": "None",
+			"isSideCompound": false,
+			"formula": "C6H11O9P",
+			"svg": "",
+			"svgWidth": "0",
+			"svgHeight": "0",
+			"id": 10
+		},
+		{
+			"biologicalType": "reaction",
+			"name": "Phosphofructokinase",
+			"dbIdentifier": "R_Rpfk",
+			"reactionReversibility": false,
+			"ec": "NA",
+			"id": 11
+		},
+		{
+			"biologicalType": "metabolite",
+			"name": "Fructose 1-6 biphosphate",
+			"dbIdentifier": "M_Fru16bp",
+			"compartment": "None",
+			"isSideCompound": false,
+			"formula": "C6H10O12P2",
+			"svg": "",
+			"svgWidth": "0",
+			"svgHeight": "0",
+			"id": 12
+		},
+		{
+			"biologicalType": "reaction",
+			"name": "Aldolase",
+			"dbIdentifier": "R_Rfba",
+			"reactionReversibility": true,
+			"ec": "NA",
+			"id": 13
+		},
+		{
+			"biologicalType": "metabolite",
+			"name": "Dihydroxyacetone phsophate",
+			"dbIdentifier": "M_Dhap",
+			"compartment": "None",
+			"isSideCompound": false,
+			"formula": "C3H5O6P",
+			"svg": "",
+			"svgWidth": "0",
+			"svgHeight": "0",
+			"id": 14
+		},
+		{
+			"biologicalType": "metabolite",
+			"name": "Glyceraldehyde 3-phosphate",
+			"dbIdentifier": "M_Gap",
+			"compartment": "None",
+			"isSideCompound": false,
+			"formula": "C3H5O6P",
+			"svg": "",
+			"svgWidth": "0",
+			"svgHeight": "0",
+			"id": 15
+		},
+		{
+			"biologicalType": "reaction",
+			"name": "Triose-phosphate isomerase",
+			"dbIdentifier": "R_Rtpi",
+			"reactionReversibility": true,
+			"ec": "NA",
+			"id": 16
+		},
+		{
+			"biologicalType": "reaction",
+			"name": "Glyceraldehyde phosphate dehydrogenase",
+			"dbIdentifier": "R_Rbottom_Glc",
+			"reactionReversibility": true,
+			"ec": "NA",
+			"id": 17
+		},
+		{
+			"biologicalType": "metabolite",
+			"name": "Posphoenolpyruvate",
+			"dbIdentifier": "M_Pep",
+			"compartment": "None",
+			"isSideCompound": false,
+			"formula": "C3H2O6P",
+			"svg": "",
+			"svgWidth": "0",
+			"svgHeight": "0",
+			"id": 18
+		},
+		{
+			"biologicalType": "reaction",
+			"name": "Pyruvate Kinase",
+			"dbIdentifier": "R_Rpyk",
+			"reactionReversibility": false,
+			"ec": "NA",
+			"id": 19
+		},
+		{
+			"biologicalType": "metabolite",
+			"name": "Pyruvate",
+			"dbIdentifier": "M_Pyr",
+			"compartment": "None",
+			"isSideCompound": false,
+			"formula": "C3H3O3",
+			"svg": "",
+			"svgWidth": "0",
+			"svgHeight": "0",
+			"id": 20
+		},
+		{
+			"biologicalType": "reaction",
+			"name": "L-lactate dehydrogenase",
+			"dbIdentifier": "R_Rldh_l",
+			"reactionReversibility": true,
+			"ec": "NA",
+			"id": 21
+		},
+		{
+			"biologicalType": "reaction",
+			"name": "Glucose 6-Phosphate dehydrogenase",
+			"dbIdentifier": "R_RoxPPP",
+			"reactionReversibility": false,
+			"ec": "NA",
+			"id": 22
+		},
+		{
+			"biologicalType": "metabolite",
+			"name": "Ribulose 5-phosphate",
+			"dbIdentifier": "M_Rul5p",
+			"compartment": "None",
+			"isSideCompound": false,
+			"formula": "C5H9O8P",
+			"svg": "",
+			"svgWidth": "0",
+			"svgHeight": "0",
+			"id": 23
+		},
+		{
+			"biologicalType": "reaction",
+			"name": "Ribose phosphate isomerase",
+			"dbIdentifier": "R_Rrpi",
+			"reactionReversibility": true,
+			"ec": "NA",
+			"id": 24
+		},
+		{
+			"biologicalType": "metabolite",
+			"name": "Ribose 5-phosphate",
+			"dbIdentifier": "M_Rib5p",
+			"compartment": "None",
+			"isSideCompound": false,
+			"formula": "C5H9O8P",
+			"svg": "",
+			"svgWidth": "0",
+			"svgHeight": "0",
+			"id": 25
+		},
+		{
+			"biologicalType": "reaction",
+			"name": "Ribulose 5 phosphate epimerase",
+			"dbIdentifier": "R_Rrpe",
+			"reactionReversibility": true,
+			"ec": "NA",
+			"id": 26
+		},
+		{
+			"biologicalType": "metabolite",
+			"name": "Xylulose 5-phosphate",
+			"dbIdentifier": "M_Xyl5p",
+			"compartment": "None",
+			"isSideCompound": false,
+			"formula": "C5H9O8P",
+			"svg": "",
+			"svgWidth": "0",
+			"svgHeight": "0",
+			"id": 27
+		},
+		{
+			"biologicalType": "reaction",
+			"name": "Transketolase 1",
+			"dbIdentifier": "R_Rtkt1",
+			"reactionReversibility": true,
+			"ec": "NA",
+			"id": 28
+		},
+		{
+			"biologicalType": "metabolite",
+			"name": "Sedoheptulose 7-phosphate",
+			"dbIdentifier": "M_Sed7p",
+			"compartment": "None",
+			"isSideCompound": false,
+			"formula": "C7H13O10P",
+			"svg": "",
+			"svgWidth": "0",
+			"svgHeight": "0",
+			"id": 29
+		},
+		{
+			"biologicalType": "reaction",
+			"name": "Transketolase 2",
+			"dbIdentifier": "R_Rtkt2",
+			"reactionReversibility": true,
+			"ec": "NA",
+			"id": 30
+		},
+		{
+			"biologicalType": "metabolite",
+			"name": "Erythrose 4-phosphate",
+			"dbIdentifier": "M_E4p",
+			"compartment": "None",
+			"isSideCompound": false,
+			"formula": "C4H7O7P",
+			"svg": "",
+			"svgWidth": "0",
+			"svgHeight": "0",
+			"id": 31
+		},
+		{
+			"biologicalType": "reaction",
+			"name": "Transaldolase",
+			"dbIdentifier": "R_Rtala",
+			"reactionReversibility": true,
+			"ec": "NA",
+			"id": 32
+		},
+		{
+			"biologicalType": "reaction",
+			"name": "extra pyruvate",
+			"dbIdentifier": "R_RextraPyr",
+			"reactionReversibility": false,
+			"ec": "NA",
+			"id": 33
+		}
+	],
+	"links": [
+		{
+			"id": "0 -- 1",
+			"source": 0,
+			"target": 1,
+			"interaction": "out",
+			"reversible": "false"
+		},
+		{
+			"id": "3 -- 2",
+			"source": 3,
+			"target": 2,
+			"interaction": "in",
+			"reversible": "false"
+		},
+		{
+			"id": "1 -- 4",
+			"source": 1,
+			"target": 4,
+			"interaction": "in",
+			"reversible": "false"
+		},
+		{
+			"id": "4 -- 5",
+			"source": 4,
+			"target": 5,
+			"interaction": "out",
+			"reversible": "false"
+		},
+		{
+			"id": "6 -- 5",
+			"source": 6,
+			"target": 5,
+			"interaction": "out",
+			"reversible": "false"
+		},
+		{
+			"id": "5 -- 7",
+			"source": 5,
+			"target": 7,
+			"interaction": "in",
+			"reversible": "true"
+		},
+		{
+			"id": "7 -- 8",
+			"source": 7,
+			"target": 8,
+			"interaction": "out",
+			"reversible": "true"
+		},
+		{
+			"id": "8 -- 9",
+			"source": 8,
+			"target": 9,
+			"interaction": "in",
+			"reversible": "true"
+		},
+		{
+			"id": "9 -- 10",
+			"source": 9,
+			"target": 10,
+			"interaction": "out",
+			"reversible": "true"
+		},
+		{
+			"id": "10 -- 11",
+			"source": 10,
+			"target": 11,
+			"interaction": "in",
+			"reversible": "false"
+		},
+		{
+			"id": "11 -- 12",
+			"source": 11,
+			"target": 12,
+			"interaction": "out",
+			"reversible": "false"
+		},
+		{
+			"id": "12 -- 13",
+			"source": 12,
+			"target": 13,
+			"interaction": "in",
+			"reversible": "true"
+		},
+		{
+			"id": "13 -- 14",
+			"source": 13,
+			"target": 14,
+			"interaction": "out",
+			"reversible": "true"
+		},
+		{
+			"id": "13 -- 15",
+			"source": 13,
+			"target": 15,
+			"interaction": "out",
+			"reversible": "true"
+		},
+		{
+			"id": "14 -- 16",
+			"source": 14,
+			"target": 16,
+			"interaction": "in",
+			"reversible": "true"
+		},
+		{
+			"id": "16 -- 15",
+			"source": 16,
+			"target": 15,
+			"interaction": "out",
+			"reversible": "true"
+		},
+		{
+			"id": "15 -- 17",
+			"source": 15,
+			"target": 17,
+			"interaction": "in",
+			"reversible": "true"
+		},
+		{
+			"id": "17 -- 18",
+			"source": 17,
+			"target": 18,
+			"interaction": "out",
+			"reversible": "true"
+		},
+		{
+			"id": "18 -- 19",
+			"source": 18,
+			"target": 19,
+			"interaction": "in",
+			"reversible": "false"
+		},
+		{
+			"id": "19 -- 20",
+			"source": 19,
+			"target": 20,
+			"interaction": "out",
+			"reversible": "false"
+		},
+		{
+			"id": "20 -- 21",
+			"source": 20,
+			"target": 21,
+			"interaction": "in",
+			"reversible": "true"
+		},
+		{
+			"id": "21 -- 3",
+			"source": 21,
+			"target": 3,
+			"interaction": "out",
+			"reversible": "true"
+		},
+		{
+			"id": "8 -- 22",
+			"source": 8,
+			"target": 22,
+			"interaction": "in",
+			"reversible": "false"
+		},
+		{
+			"id": "22 -- 23",
+			"source": 22,
+			"target": 23,
+			"interaction": "out",
+			"reversible": "false"
+		},
+		{
+			"id": "23 -- 24",
+			"source": 23,
+			"target": 24,
+			"interaction": "in",
+			"reversible": "true"
+		},
+		{
+			"id": "24 -- 25",
+			"source": 24,
+			"target": 25,
+			"interaction": "out",
+			"reversible": "true"
+		},
+		{
+			"id": "23 -- 26",
+			"source": 23,
+			"target": 26,
+			"interaction": "in",
+			"reversible": "true"
+		},
+		{
+			"id": "26 -- 27",
+			"source": 26,
+			"target": 27,
+			"interaction": "out",
+			"reversible": "true"
+		},
+		{
+			"id": "25 -- 28",
+			"source": 25,
+			"target": 28,
+			"interaction": "in",
+			"reversible": "true"
+		},
+		{
+			"id": "27 -- 28",
+			"source": 27,
+			"target": 28,
+			"interaction": "in",
+			"reversible": "true"
+		},
+		{
+			"id": "28 -- 15",
+			"source": 28,
+			"target": 15,
+			"interaction": "out",
+			"reversible": "true"
+		},
+		{
+			"id": "28 -- 29",
+			"source": 28,
+			"target": 29,
+			"interaction": "out",
+			"reversible": "true"
+		},
+		{
+			"id": "31 -- 30",
+			"source": 31,
+			"target": 30,
+			"interaction": "in",
+			"reversible": "true"
+		},
+		{
+			"id": "27 -- 30",
+			"source": 27,
+			"target": 30,
+			"interaction": "in",
+			"reversible": "true"
+		},
+		{
+			"id": "30 -- 10",
+			"source": 30,
+			"target": 10,
+			"interaction": "out",
+			"reversible": "true"
+		},
+		{
+			"id": "30 -- 15",
+			"source": 30,
+			"target": 15,
+			"interaction": "out",
+			"reversible": "true"
+		},
+		{
+			"id": "15 -- 32",
+			"source": 15,
+			"target": 32,
+			"interaction": "in",
+			"reversible": "true"
+		},
+		{
+			"id": "29 -- 32",
+			"source": 29,
+			"target": 32,
+			"interaction": "in",
+			"reversible": "true"
+		},
+		{
+			"id": "32 -- 31",
+			"source": 32,
+			"target": 31,
+			"interaction": "out",
+			"reversible": "true"
+		},
+		{
+			"id": "32 -- 10",
+			"source": 32,
+			"target": 10,
+			"interaction": "out",
+			"reversible": "true"
+		},
+		{
+			"id": "33 -- 20",
+			"source": 33,
+			"target": 20,
+			"interaction": "out",
+			"reversible": "false"
+		}
+	],
+	"mappingdata": [
+		{
+			"name": "Flux",
+			"targetLabel": "reactionId",
+			"mappings": [
+				{
+					"name": "Min",
+					"data": [
+						{
+							"node": "R_RglcEx",
+							"value": 0.0
+						},
+						{
+							"node": "R_RlacEx",
+							"value": 1.0
+						},
+						{
+							"node": "R_Rhex1",
+							"value": 0.0
+						},
+						{
+							"node": "R_RglycEx",
+							"value": 0.0
+						},
+						{
+							"node": "R_Rglc6p_pdif",
+							"value": -1000.0
+						},
+						{
+							"node": "R_Rpgi",
+							"value": -1000.0
+						},
+						{
+							"node": "R_Rpfk",
+							"value": 0.0
+						},
+						{
+							"node": "R_Rfba",
+							"value": -1000.0
+						},
+						{
+							"node": "R_Rtpi",
+							"value": -1000.0
+						},
+						{
+							"node": "R_Rbottom_Glc",
+							"value": -1000.0
+						},
+						{
+							"node": "R_Rpyk",
+							"value": 0.0
+						},
+						{
+							"node": "R_Rldh_l",
+							"value": -1000.0
+						},
+						{
+							"node": "R_RoxPPP",
+							"value": 0.0
+						},
+						{
+							"node": "R_Rrpi",
+							"value": -1000.0
+						},
+						{
+							"node": "R_Rrpe",
+							"value": -1000.0
+						},
+						{
+							"node": "R_Rtkt1",
+							"value": -1000.0
+						},
+						{
+							"node": "R_Rtkt2",
+							"value": -1000.0
+						},
+						{
+							"node": "R_Rtala",
+							"value": -1000.0
+						},
+						{
+							"node": "R_RextraPyr",
+							"value": 0.0
+						}
+					]
+				},
+				{
+					"name": "Max",
+					"data": [
+						{
+							"node": "R_RglcEx",
+							"value": 1000.0
+						},
+						{
+							"node": "R_RlacEx",
+							"value": 1.0
+						},
+						{
+							"node": "R_Rhex1",
+							"value": 1000.0
+						},
+						{
+							"node": "R_RglycEx",
+							"value": 1000.0
+						},
+						{
+							"node": "R_Rglc6p_pdif",
+							"value": 1000.0
+						},
+						{
+							"node": "R_Rpgi",
+							"value": 1000.0
+						},
+						{
+							"node": "R_Rpfk",
+							"value": 1000.0
+						},
+						{
+							"node": "R_Rfba",
+							"value": 1000.0
+						},
+						{
+							"node": "R_Rtpi",
+							"value": 1000.0
+						},
+						{
+							"node": "R_Rbottom_Glc",
+							"value": 1000.0
+						},
+						{
+							"node": "R_Rpyk",
+							"value": 1000.0
+						},
+						{
+							"node": "R_Rldh_l",
+							"value": 1000.0
+						},
+						{
+							"node": "R_RoxPPP",
+							"value": 1000.0
+						},
+						{
+							"node": "R_Rrpi",
+							"value": 1000.0
+						},
+						{
+							"node": "R_Rrpe",
+							"value": 1000.0
+						},
+						{
+							"node": "R_Rtkt1",
+							"value": 1000.0
+						},
+						{
+							"node": "R_Rtkt2",
+							"value": 1000.0
+						},
+						{
+							"node": "R_Rtala",
+							"value": 1000.0
+						},
+						{
+							"node": "R_RextraPyr",
+							"value": 1000.0
+						}
+					]
+				}
+			]
+		}
+	]
+}

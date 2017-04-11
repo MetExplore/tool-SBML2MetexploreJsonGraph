@@ -172,7 +172,7 @@
 	<!-- Run jUnit -->
 	<target name="junit" depends="compile">
 
-		<junit printsummary="yes" haltonfailure="no">
+		<junit printsummary="no" haltonfailure="no">
 
 			<classpath refid="classpath" />
 			<classpath location="${build.dest}" />
