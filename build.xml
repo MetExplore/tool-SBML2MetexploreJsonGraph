@@ -71,7 +71,7 @@
 
 		<property name="resource.dir" value="${basedir}/resources" />
 
-		<property name="main-class" value="phnmnl.enrichment.EnrichMetaboliteIds" />
+		<property name="main-class" value="phnmnl.SBML2Json" />
 
 		<filter token="year" value="${year}" />
 		<filter token="version" value="${version}" />
