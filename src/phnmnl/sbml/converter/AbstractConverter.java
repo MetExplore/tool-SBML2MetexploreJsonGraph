@@ -69,6 +69,12 @@ public abstract class AbstractConverter {
 			nodes.add(reactionNode);
 			int reactionindex = nodes.size() - 1;
 			this.indexMap.put(r.getId(), reactionindex);
+			
+			reactionNode.addProperty("id", reactionindex);
+			
+			JsonArray rxnPaths=null;
+			if(reactionNode.has("pathways"))
+				rxnPaths=reactionNode.get("pathways").getAsJsonArray();
 
 			/*
 			 * Reactant list => "In" links
@@ -77,20 +83,31 @@ public abstract class AbstractConverter {
 				Species s = sref.getSpeciesInstance();
 
 				JsonObject mtbNode;
+				int mtbIndex;
 				if (this.indexMap.containsKey(s.getId())) {
-					int mtbIndex = this.indexMap.get(s.getId());
+					mtbIndex = this.indexMap.get(s.getId());
 
 					mtbNode = (JsonObject) nodes.get(mtbIndex);
 
 				} else {
 					mtbNode = this.createMetaboliteNode(s);
 					nodes.add(mtbNode);
-					int mtbIndex = nodes.size() - 1;
+					mtbIndex = nodes.size() - 1;
 
 					this.indexMap.put(s.getId(), mtbIndex);
+					
+					mtbNode.addProperty("id", mtbIndex);
+				}
+				
+				if(rxnPaths != null){
+					if(mtbNode.has("pathways")){
+						mtbNode.get("pathways").getAsJsonArray().addAll(rxnPaths);
+					}else{
+						mtbNode.add("pathways", rxnPaths);
+					}
 				}
 
-				this.addLink(s.getId(), r.getId(), "in", r.getReversible());
+				this.addLink(mtbIndex,reactionindex, "in", r.getReversible());
 
 			}
 
@@ -101,20 +118,31 @@ public abstract class AbstractConverter {
 				Species s = sref.getSpeciesInstance();
 
 				JsonObject mtbNode;
+				int mtbIndex;
 				if (this.indexMap.containsKey(s.getId())) {
-					int mtbIndex = this.indexMap.get(s.getId());
+					mtbIndex = this.indexMap.get(s.getId());
 
 					mtbNode = (JsonObject) nodes.get(mtbIndex);
 
 				} else {
 					mtbNode = this.createMetaboliteNode(s);
 					nodes.add(mtbNode);
-					int mtbIndex = nodes.size() - 1;
+					mtbIndex = nodes.size() - 1;
 
 					this.indexMap.put(s.getId(), mtbIndex);
+					
+					mtbNode.addProperty("id", mtbIndex);
 				}
 
-				this.addLink(r.getId(), s.getId(), "out", r.getReversible());
+				if(rxnPaths != null){
+					if(mtbNode.has("pathways")){
+						mtbNode.get("pathways").getAsJsonArray().addAll(rxnPaths);
+					}else{
+						mtbNode.add("pathways", rxnPaths);
+					}
+				}
+				
+				this.addLink(reactionindex, mtbIndex, "out", r.getReversible());
 
 			}
 
@@ -129,12 +157,12 @@ public abstract class AbstractConverter {
 	 * @param dir
 	 * @param reversible
 	 */
-	protected void addLink(String idSource, String idTarget, String dir, boolean reversible) {
+	protected void addLink(int idSource, int idTarget, String dir, boolean reversible) {
 		JsonObject link = new JsonObject();
 
 		link.addProperty("id", idSource + " -- " + idTarget);
-		link.addProperty("source", indexMap.get(idSource));
-		link.addProperty("target", indexMap.get(idTarget));
+		link.addProperty("source", idSource);
+		link.addProperty("target", idTarget);
 		link.addProperty("interaction", dir);
 		link.addProperty("reversible", String.valueOf(reversible));
 
@@ -161,8 +189,9 @@ public abstract class AbstractConverter {
 		}
 
 		// TODO add mapping on metabolites if any
-
-		this.json.add("mappingdata", mappingsdata);
+		if(mappingsdata.size() != 0 ){
+			this.json.add("mappingdata", mappingsdata);
+		}
 
 	}
 

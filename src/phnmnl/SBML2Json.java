@@ -8,8 +8,6 @@ import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
 import org.kohsuke.args4j.Option;
 
-import com.google.gson.JsonObject;
-
 import phnmnl.sbml.Reader;
 import phnmnl.sbml.converter.AbstractConverter;
 import phnmnl.sbml.converter.FBC2toJsonConverter;

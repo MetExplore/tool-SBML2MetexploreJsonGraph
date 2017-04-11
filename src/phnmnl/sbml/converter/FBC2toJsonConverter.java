@@ -44,10 +44,10 @@ public class FBC2toJsonConverter extends AbstractConverter {
 			this.mincdt.get("data").getAsJsonArray().add(lb);
 		}
 		if(rfbc.isSetUpperFluxBound()){
-			JsonObject lb=new JsonObject();
-			lb.addProperty("node",  r.getId());
-			lb.addProperty("value",  rfbc.getUpperFluxBoundInstance().getValue());
-			this.maxcdt.get("data").getAsJsonArray().add(lb);
+			JsonObject ub=new JsonObject();
+			ub.addProperty("node",  r.getId());
+			ub.addProperty("value",  rfbc.getUpperFluxBoundInstance().getValue());
+			this.maxcdt.get("data").getAsJsonArray().add(ub);
 		}		
 		
 		return rxn;
