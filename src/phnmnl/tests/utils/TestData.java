@@ -8,10 +8,13 @@ public interface TestData {
 	
 	Model getModel();
 	void setModel(Model model);
+	
 	public int getNbReactions();
 	public int getNbMetabolites();
 	public int getNbCompartments();
+	
 	public void testModel();
+	
 	public String getInputFile();
 	public String getOutputFile();
 

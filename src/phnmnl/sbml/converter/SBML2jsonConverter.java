@@ -16,7 +16,7 @@ public class SBML2jsonConverter extends AbstractConverter {
 	}
 
 	@Override
-	protected JsonObject createReactionNode(Reaction r) {
+	public JsonObject createReactionNode(Reaction r) {
 		JsonObject rxn=new JsonObject();
 		
 		rxn.addProperty("biologicalType","reaction");
@@ -53,7 +53,7 @@ public class SBML2jsonConverter extends AbstractConverter {
 	}
 
 	@Override
-	protected JsonObject createMetaboliteNode(Species s) {
+	public JsonObject createMetaboliteNode(Species s) {
 		JsonObject met=new JsonObject();
 		
 		met.addProperty("biologicalType","metabolite");

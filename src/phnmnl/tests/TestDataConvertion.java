@@ -39,7 +39,7 @@ public class TestDataConvertion {
 	public TestData data;
 
 	@Test
-	public final void test() throws XMLStreamException, IOException {
+	public final void testA_constructor() throws XMLStreamException, IOException {
 		Reader r = new Reader(data.getInputFile());
 
 		r.read();
@@ -52,15 +52,17 @@ public class TestDataConvertion {
 		assertNotNull("Converter is null", conv);
 	}
 
+	@Test
 	public void testB_Convert() {
 
-//		conv.convert();
-//		assertNotNull("converted Json is null", conv.getJson());
-//		data.setJson(conv.getJson());
-//		data.testJson();
+		conv.convert();
+		assertNotNull("converted Json is null", conv.getJson());
+		data.setJson(conv.getJson());
+		data.testJson();
 
 	}
 	
+	@Test
 	public void testC_WriteFile(){
 		
 	}

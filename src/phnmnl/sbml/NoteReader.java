@@ -15,7 +15,7 @@ public class NoteReader {
 	
 	public static final String pathwaySep=" \\|\\| ";
 	
-	public static void parseReactionNotes(JsonObject jObject, String note){
+	public static void parseSBaseNotes(JsonObject jObject, String note){
 		Matcher m;
 		
 		//get the pathways
@@ -40,15 +40,11 @@ public class NoteReader {
 		
 		//get formula
 		if( (m = Pattern.compile(defaultformulaPattern).matcher(note) ).find()){
-			String value = m.group(1);
-			
-			jObject.addProperty("formula", value);
+			jObject.addProperty("formula",  m.group(1));
 		}
 
 		if( (m = Pattern.compile(defaultchargePattern).matcher(note) ).find()){
-			String value = m.group(1);
-
-			jObject.addProperty("charge", value);
+			jObject.addProperty("charge",  m.group(1));
 		}
 		
 		

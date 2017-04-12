@@ -8,11 +8,25 @@ import org.sbml.jsbml.Reaction;
 import org.sbml.jsbml.Species;
 import org.sbml.jsbml.SpeciesReference;
 
+import com.google.gson.JsonObject;
+
 public class Lvl2Dummy implements Dummy {
 	
 	private Model model;
 	private Reaction rxn;
 	private Species s;
+	
+
+	private static final int nbReactions = 1;
+	private static final int nbMetabolites = 1;
+	private static final int nbCompartments = 1;
+
+
+	private JsonObject json;
+	private static final int nbNodes = 2;
+	private static final int nbLinks = 1;
+	private static final boolean hasMappings = true;
+	private static final int[] nbMappings = { 1, 1 };
 	
 	private static final boolean isFbc = false;
 	
@@ -89,6 +103,93 @@ public class Lvl2Dummy implements Dummy {
 	@Override
 	public boolean isFbc() {
 		return isFbc;
+	}
+
+
+	@Override
+	public int getNbReactions() {
+		return nbReactions;
+	}
+
+
+	@Override
+	public int getNbMetabolites() {
+		return nbMetabolites;
+	}
+
+
+	@Override
+	public int getNbCompartments() {
+		return nbCompartments;
+	}
+
+
+	@Override
+	public void testModel() {
+		return;		
+	}
+
+
+	@Override
+	public String getInputFile() {
+		return null;
+	}
+
+
+	@Override
+	public String getOutputFile() {
+		return null;
+	}
+
+
+	@Override
+	public int getNbNodes() {
+		
+		return nbNodes;
+	}
+
+
+	@Override
+	public int getNbLinks() {
+		return nbLinks;
+	}
+
+
+	@Override
+	public boolean getHasMappings() {
+		return hasMappings;
+	}
+
+
+	@Override
+	public int getNbMappingsCdt() {
+		return nbMappings.length;
+	}
+
+
+	@Override
+	public int getNbMappingsData(int i) {
+		
+		return nbMappings[i];
+	}
+
+
+	@Override
+	public void testJson() {
+		return;
+	}
+
+
+	@Override
+	public JsonObject getJson() {
+		return this.json;
+	}
+
+
+	@Override
+	public void setJson(JsonObject j) {
+		this.json=j;
+		
 	}
 
 }

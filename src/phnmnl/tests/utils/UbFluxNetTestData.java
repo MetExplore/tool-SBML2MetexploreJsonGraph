@@ -130,7 +130,8 @@ public class UbFluxNetTestData implements TestData {
 							
 							assertTrue("No data in condition "+i+" of Mapping n°1", c.has("data"));
 							if(c.has("data")){
-								
+								JsonArray data = c.get("data").getAsJsonArray();
+								assertEquals("Wrong number of data in condition "+i,this.getNbMappingsData(i),data.size());
 							}
 						}
 					}

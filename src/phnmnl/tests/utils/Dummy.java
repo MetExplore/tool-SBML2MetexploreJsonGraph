@@ -4,7 +4,7 @@ import org.sbml.jsbml.Model;
 import org.sbml.jsbml.Reaction;
 import org.sbml.jsbml.Species;
 
-public interface Dummy {
+public interface Dummy extends TestData{
 
 	public void initSBML();
 	

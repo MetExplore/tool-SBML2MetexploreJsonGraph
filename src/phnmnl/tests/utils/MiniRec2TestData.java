@@ -115,15 +115,15 @@ public class MiniRec2TestData implements TestData {
 				JsonObject m = mappings.get(0).getAsJsonObject();
 
 				assertTrue("No name in Mapping n°1", m.has("name"));
-				if (j.has("name"))
+				if (m.has("name"))
 					assertEquals("Wrong Name of Mapping n°1", "Flux", m.get("name").getAsString());
 
 				assertTrue("No TargetLabel in Mapping n°1", m.has("targetLabel"));
-				if (j.has("targetLabel"))
+				if (m.has("targetLabel"))
 					assertEquals("Wrong Name of Mapping n°1", "reactionId", m.get("targetLabel").getAsString());
 
 				assertTrue("No condition in Mapping n°1", m.has("mappings"));
-				if (j.has("mappings")){
+				if (m.has("mappings")){
 					
 					int n=this.getNbMappingsCdt();
 					assertEquals("Wrong number of conditions in Mapping n°1", n, m.get("mappings").getAsJsonArray().size());
@@ -133,7 +133,8 @@ public class MiniRec2TestData implements TestData {
 							
 							assertTrue("No data in condition "+i+" of Mapping n°1", c.has("data"));
 							if(c.has("data")){
-								// TODO finish here
+								JsonArray data = c.get("data").getAsJsonArray();
+								assertEquals("Wrong number of data in condition "+i,this.getNbMappingsData(i),data.size());
 							}
 						}
 					}

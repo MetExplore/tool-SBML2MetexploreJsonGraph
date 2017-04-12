@@ -18,6 +18,7 @@ import org.junit.runners.Parameterized.Parameters;
 import org.sbml.jsbml.Reaction;
 import org.sbml.jsbml.Species;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import phnmnl.sbml.converter.AbstractConverter;
@@ -43,7 +44,7 @@ public class TestConverter {
 
 	@Test
 	public void testA_constructor() throws XMLStreamException, IOException {
-		
+
 		if (inputDummy.isFbc()) {
 			conv = new FBC2toJsonConverter(inputDummy.getModel());
 		} else {
@@ -52,30 +53,30 @@ public class TestConverter {
 
 		assertNotNull("Converter is null", conv);
 	}
-	
+
 	@Test
-	public void testB_initMappings(){
-		
+	public void testB_initMappings() {
+
 		conv.initializeMappingArray();
-		
+
 		assertTrue("No name in min condition object", conv.getMincdt().has("name"));
 		if (conv.getMincdt().has("name"))
 			assertEquals("Incorrect name in min condition object", "Min", conv.getMincdt().get("name").getAsString());
-		
+
 		assertTrue("No data in min condition object", conv.getMincdt().has("data"));
 		if (conv.getMincdt().has("data"))
-			assertEquals("Data array not empty in min condition object", 0, conv.getMincdt().get("data").getAsJsonArray().size());
-		
-		
+			assertEquals("Data array not empty in min condition object", 0,
+					conv.getMincdt().get("data").getAsJsonArray().size());
+
 		assertTrue("No name in Max condition object", conv.getMaxcdt().has("name"));
 		if (conv.getMaxcdt().has("name"))
 			assertEquals("Incorrect name in Max condition object", "Max", conv.getMaxcdt().get("name").getAsString());
-		
+
 		assertTrue("No data in Max condition object", conv.getMaxcdt().has("data"));
 		if (conv.getMaxcdt().has("data"))
-			assertEquals("Data array not empty in Max condition object", 0, conv.getMaxcdt().get("data").getAsJsonArray().size());
-		
-		
+			assertEquals("Data array not empty in Max condition object", 0,
+					conv.getMaxcdt().get("data").getAsJsonArray().size());
+
 	}
 
 	@Test
@@ -120,7 +121,8 @@ public class TestConverter {
 
 		assertTrue("No biologicalType in created Metabolite Node", so.has("biologicalType"));
 		if (so.has("biologicalType"))
-			assertEquals("Incorrect interaction in added Metabolite Node", "metabolite",so.get("biologicalType").getAsString());
+			assertEquals("Incorrect interaction in added Metabolite Node", "metabolite",
+					so.get("biologicalType").getAsString());
 
 		assertTrue("No name in created Metabolite Node", so.has("name"));
 		if (so.has("name"))
@@ -128,15 +130,18 @@ public class TestConverter {
 
 		assertTrue("No dbIdentifier in created Metabolite Node", so.has("dbIdentifier"));
 		if (so.has("dbIdentifier"))
-			assertEquals("Incorrect dbIdentifier in added Metabolite Node", s.getId(), so.get("dbIdentifier").getAsString());
+			assertEquals("Incorrect dbIdentifier in added Metabolite Node", s.getId(),
+					so.get("dbIdentifier").getAsString());
 
 		assertTrue("No compartment in created Metabolite Node", so.has("compartment"));
 		if (so.has("compartment"))
-			assertEquals("Incorrect compartment in added Metabolite Node", s.getCompartmentInstance().getName(),so.get("compartment").getAsString());
+			assertEquals("Incorrect compartment in added Metabolite Node", s.getCompartmentInstance().getName(),
+					so.get("compartment").getAsString());
 
 		assertTrue("No 'isSideCompound' attribute in created Metabolite Node", so.has("isSideCompound"));
 		if (so.has("isSideCompound"))
-			assertEquals("Incorrect isSideCompound in added Metabolite Node", false,so.get("isSideCompound").getAsBoolean());
+			assertEquals("Incorrect isSideCompound in added Metabolite Node", false,
+					so.get("isSideCompound").getAsBoolean());
 
 		assertTrue("No 'svg' attribute in created Metabolite Node", so.has("svg"));
 		if (so.has("svg"))
@@ -152,75 +157,118 @@ public class TestConverter {
 
 	}
 
-	 @Test
-	 public void testE_createReactionNode() {
-		 
-		Reaction r=inputDummy.getRxn();
+	@Test
+	public void testE_createReactionNode() {
+
+		Reaction r = inputDummy.getRxn();
 		JsonObject so = conv.createReactionNode(r);
-		
+
 		assertTrue("No 'biologicalType' attribute in created Reaction Node", so.has("biologicalType"));
 		if (so.has("biologicalType"))
-			assertEquals("Incorrect biologicalType in added Reaction Node", "reaction", so.get("biologicalType").getAsString());
-			
+			assertEquals("Incorrect biologicalType in added Reaction Node", "reaction",
+					so.get("biologicalType").getAsString());
+
 		assertTrue("No dbIdentifier in created Reaction Node", so.has("dbIdentifier"));
 		if (so.has("dbIdentifier"))
-			assertEquals("Incorrect name in added Reaction Node", r.getId(), so.get("dbIdentifier").getAsString()); 
-		
+			assertEquals("Incorrect name in added Reaction Node", r.getId(), so.get("dbIdentifier").getAsString());
+
 		assertTrue("No name in created Reaction Node", so.has("name"));
 		if (so.has("name"))
-			assertEquals("Incorrect name in added Reaction Node", r.getName(), so.get("name").getAsString()); 
-		 
+			assertEquals("Incorrect name in added Reaction Node", r.getName(), so.get("name").getAsString());
+
 		assertTrue("No 'reactionReversibility' attribute in created Reaction Node", so.has("reactionReversibility"));
 		if (so.has("name"))
-			assertEquals("Incorrect 'reactionReversibility' attribute in added Reaction Node", r.getReversible(), so.get("reactionReversibility").getAsBoolean()); 
-		 
-		JsonObject cdt=conv.getMincdt();
+			assertEquals("Incorrect 'reactionReversibility' attribute in added Reaction Node", r.getReversible(),
+					so.get("reactionReversibility").getAsBoolean());
+
+		JsonObject cdt = conv.getMincdt();
 		assertEquals("Wrong number of data in min condition", 1, cdt.get("data").getAsJsonArray().size());
-		if ( cdt.get("data").getAsJsonArray().size()==1){
-			JsonObject mapp=cdt.get("data").getAsJsonArray().get(0).getAsJsonObject();
-			
+		if (cdt.get("data").getAsJsonArray().size() == 1) {
+			JsonObject mapp = cdt.get("data").getAsJsonArray().get(0).getAsJsonObject();
+
 			assertTrue("No node in mapping test data", mapp.has("node"));
 			if (mapp.has("node"))
 				assertEquals("Incorrect node in mapping test data", r.getId(), mapp.get("node").getAsString());
-			
+
+			assertTrue("No value in mapping test data", mapp.has("value"));
+			if (mapp.has("value"))
+				assertEquals("Incorrect name in mapping test data", 0.0, mapp.get("value").getAsDouble(), 0);
+		}
+
+		cdt = conv.getMaxcdt();
+		assertEquals("Wrong number of data in min condition", 1, cdt.get("data").getAsJsonArray().size());
+		if (cdt.get("data").getAsJsonArray().size() == 1) {
+			JsonObject mapp = cdt.get("data").getAsJsonArray().get(0).getAsJsonObject();
+
+			assertTrue("No node in mapping test data", mapp.has("node"));
+			if (mapp.has("node"))
+				assertEquals("Incorrect node in mapping test data", r.getId(), mapp.get("node").getAsString());
+
 			assertTrue("No value in mapping test data", mapp.has("value"));
 			if (mapp.has("value"))
 				assertEquals("Incorrect name in mapping test data", 0.0, mapp.get("value").getAsDouble(), 0);
 		}
 		
-		cdt=conv.getMaxcdt();
-		assertEquals("Wrong number of data in min condition", 1, cdt.get("data").getAsJsonArray().size());
-		if ( cdt.get("data").getAsJsonArray().size()==1){
-			JsonObject mapp=cdt.get("data").getAsJsonArray().get(0).getAsJsonObject();
-			
-			assertTrue("No node in mapping test data", mapp.has("node"));
-			if (mapp.has("node"))
-				assertEquals("Incorrect node in mapping test data", r.getId(), mapp.get("node").getAsString());
-			
-			assertTrue("No value in mapping test data", mapp.has("value"));
-			if (mapp.has("value"))
-				assertEquals("Incorrect name in mapping test data", 0.0, mapp.get("value").getAsDouble(), 0);
-		}
-		
-	 }
-	 
-	 @Test
-	 public void testF_parseReaction(){
-		 conv.setModel(inputDummy.getModel());
-//		 conv.parseReaction();
-//		 
-//		 assertEquals("",conv.getNodes().size());
-//		 System.out.println(conv.getNodes());
-//		 System.out.println(conv.getLinks());
-	 }
+		/*
+		 * reset arrays for future tests
+		 */
+		conv.setMincdt(new JsonObject());
+		conv.setMaxcdt(new JsonObject());
+		conv.initializeMappingArray();
+	}
 
 	@Test
-	 public void testG_addMapping(){
-		 //conv.addMappings();
-		 
-	 }
+	public void testF_parseReaction() {
+		conv.setModel(inputDummy.getModel());
+		conv.parseReaction();
 
-	
+		assertEquals("Wrong Number of Nodes", inputDummy.getNbNodes(), conv.getNodes().size());
+		assertEquals("Wrong Number of Nodes", inputDummy.getNbLinks(), conv.getLinks().size());
+	}
+
+	@Test
+	public void testG_addMapping() {
+		
+		JsonObject j=new JsonObject();
+		conv.setJson(j);
+		conv.addMappings();
+		
+		assertEquals("Error in mapping data", inputDummy.getHasMappings(), j.has("mappingdata"));
+		if (j.has("mappingdata")){
+			JsonArray mds=j.get("mappingdata").getAsJsonArray();
+			
+			assertEquals("More than one mappings added",1,mds.size());
+			if(mds.size()==1){
+				JsonObject map = mds.get(0).getAsJsonObject();
+				
+				assertTrue("No name in mapping test data", map.has("name"));
+				if (map.has("name"))
+					assertEquals("Incorrect name in mapping test data", "Flux", map.get("name").getAsString());
+				
+				assertTrue("No 'targetLabel' attribute in mapping test data", map.has("targetLabel"));
+				if (map.has("targetLabel"))
+					assertEquals("Incorrect 'targetLabel' attribute in mapping test data","reactionId", map.get("targetLabel").getAsString());
+				
+				assertTrue("No condition data in mapping test data", map.has("mappings"));
+				if (map.has("mappings")){
+					
+					int n=inputDummy.getNbMappingsCdt();
+					assertEquals("Incorrect number of condition in mapping test data",n, map.get("mappings").getAsJsonArray().size());
+					if(map.get("mappings").getAsJsonArray().size()==n){
+						for(int i=0;i<n;i++){
+							JsonArray data = map.get("mappings").getAsJsonArray().get(i).getAsJsonObject().get("data").getAsJsonArray();
+							assertEquals("Wrong number of data in condition "+i,inputDummy.getNbMappingsData(i),data.size());
+						}
+					}
+				}
+			}
+			
+			
+		}
+		
+
+	}
+
 	//
 	// @Test
 	// public void testD_WriteJsonToFile() {
