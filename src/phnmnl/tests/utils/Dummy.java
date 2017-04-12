@@ -1,32 +1,24 @@
 package phnmnl.tests.utils;
 
 import org.sbml.jsbml.Model;
-
-import com.google.gson.JsonObject;
+import org.sbml.jsbml.Reaction;
+import org.sbml.jsbml.Species;
 
 public interface Dummy {
-	
 
-	public int getNbReactions();
-	public int getNbMetabolites();
-	public int getNbCompartments();
-	public void testModel();
-	public String getInputFile();
-	public String getOutputFile();
-
-	public int getNbNodes();
-	public int getNbLinks();
-	public boolean getHasMappings();
-	public int getNbMappingsCdt();
-	public int getNbMappingsData(int i);
-	
-	public void testJson();
-	public JsonObject getJson();
-	public void setJson(JsonObject j);
-	
-	public boolean isFbc();
+	public void initSBML();
 	
 	public Model getModel();
+
 	public void setModel(Model model);
+
+	Reaction getRxn();
+
+	void setRxn(Reaction rxn);
+
+	Species getSpecies();
+
+	void setSpecies(Species s);
 	
+	public boolean isFbc();
 }

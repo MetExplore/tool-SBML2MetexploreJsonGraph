@@ -1,8 +1,6 @@
 package phnmnl.tests;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -19,15 +17,18 @@ import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
 
 import phnmnl.sbml.Reader;
-import phnmnl.tests.utils.TestData;
+import phnmnl.sbml.converter.AbstractConverter;
+import phnmnl.sbml.converter.FBC2toJsonConverter;
+import phnmnl.sbml.converter.SBML2jsonConverter;
 import phnmnl.tests.utils.MiniRec2TestData;
+import phnmnl.tests.utils.TestData;
 import phnmnl.tests.utils.UbFluxNetTestData;
 
 @RunWith(Parameterized.class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class TestReader {
+public class TestDataConvertion {
 
-	public static Reader tester;
+	public static AbstractConverter conv;
 
 	@Parameters
 	public static Collection<TestData[]> data() {
@@ -35,28 +36,33 @@ public class TestReader {
 	}
 
 	@Parameter(0)
-	public TestData inputDummy;
+	public TestData data;
 
 	@Test
-	public void testA_ReaderString() {
-		tester = new Reader(inputDummy.getInputFile());
-		assertNotNull("Failed to instantiate JSBML reader: object is null", tester);
+	public final void test() throws XMLStreamException, IOException {
+		Reader r = new Reader(data.getInputFile());
 
+		r.read();
+		if (r.isFBCModel()) {
+			conv = new FBC2toJsonConverter(r.getModel());
+		} else {
+			conv = new SBML2jsonConverter(r.getModel());
+		}
+
+		assertNotNull("Converter is null", conv);
 	}
 
-	@Test
-	public void testB_Read() throws XMLStreamException, IOException {
+	public void testB_Convert() {
 
-		tester.read();
+//		conv.convert();
+//		assertNotNull("converted Json is null", conv.getJson());
+//		data.setJson(conv.getJson());
+//		data.testJson();
 
-		assertNotNull("Read model is null", tester.getModel());
-		inputDummy.setModel(tester.getModel());
-		inputDummy.testModel();
 	}
-
-	@Test
-	public void testC_IsFBCModel() {
-		assertEquals("Use of FBC module doesn't match dummy parameter", inputDummy.isFbc(), tester.isFBCModel());
+	
+	public void testC_WriteFile(){
+		
 	}
 
 }

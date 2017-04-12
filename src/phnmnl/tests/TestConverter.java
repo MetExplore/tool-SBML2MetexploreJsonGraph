@@ -8,7 +8,6 @@ import java.util.Collection;
 
 import javax.xml.stream.XMLStreamException;
 
-import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,87 +15,216 @@ import org.junit.runners.MethodSorters;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
+import org.sbml.jsbml.Reaction;
+import org.sbml.jsbml.Species;
 
-import phnmnl.sbml.Reader;
+import com.google.gson.JsonObject;
+
 import phnmnl.sbml.converter.AbstractConverter;
 import phnmnl.sbml.converter.FBC2toJsonConverter;
 import phnmnl.sbml.converter.SBML2jsonConverter;
 import phnmnl.tests.utils.Dummy;
-import phnmnl.tests.utils.MiniRec2Dummy;
-import phnmnl.tests.utils.UbFluxNetDummy;
+import phnmnl.tests.utils.FBC2Dummy;
+import phnmnl.tests.utils.Lvl2Dummy;
 
 @RunWith(Parameterized.class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestConverter {
-	
-	public static AbstractConverter conv;
-	
-	@Parameters
-    public static Collection<Dummy[]> data() {
-        return Arrays.asList(new Dummy[][] {
-                 {new MiniRec2Dummy() }, 
-                 {new UbFluxNetDummy() }  
-           });
-    }
 
-    @Parameter(0)
-    public Dummy inputDummy;
-    
-    @Test
-    public void testA_constructor(){
-    	Reader r=new Reader(inputDummy.getInputFile());
-    	
-    	try {
-			r.read();
-			if(r.isFBCModel()){
-				conv=new FBC2toJsonConverter(r.getModel());
-			}else{
-				conv=new SBML2jsonConverter(r.getModel());
-			}
-		} catch (XMLStreamException | IOException e) {
-			e.printStackTrace();
-		}
-    	assertNotNull("Converter is null", conv);
-    }
+	public static AbstractConverter conv;
+
+	@Parameters
+	public static Collection<Dummy[]> data() {
+		return Arrays.asList(new Dummy[][] { { new Lvl2Dummy() }, { new FBC2Dummy() } });
+	}
+
+	@Parameter(0)
+	public Dummy inputDummy;
 
 	@Test
-	public void testB_Convert() {
+	public void testA_constructor() throws XMLStreamException, IOException {
 		
-		conv.convert();	
-		assertNotNull("converted Json is null",conv.getJson());
-		inputDummy.setJson(conv.getJson());
-		inputDummy.testJson();
+		if (inputDummy.isFbc()) {
+			conv = new FBC2toJsonConverter(inputDummy.getModel());
+		} else {
+			conv = new SBML2jsonConverter(inputDummy.getModel());
+		}
+
+		assertNotNull("Converter is null", conv);
+	}
+	
+	@Test
+	public void testB_initMappings(){
+		
+		conv.initializeMappingArray();
+		
+		assertTrue("No name in min condition object", conv.getMincdt().has("name"));
+		if (conv.getMincdt().has("name"))
+			assertEquals("Incorrect name in min condition object", "Min", conv.getMincdt().get("name").getAsString());
+		
+		assertTrue("No data in min condition object", conv.getMincdt().has("data"));
+		if (conv.getMincdt().has("data"))
+			assertEquals("Data array not empty in min condition object", 0, conv.getMincdt().get("data").getAsJsonArray().size());
+		
+		
+		assertTrue("No name in Max condition object", conv.getMaxcdt().has("name"));
+		if (conv.getMaxcdt().has("name"))
+			assertEquals("Incorrect name in Max condition object", "Max", conv.getMaxcdt().get("name").getAsString());
+		
+		assertTrue("No data in Max condition object", conv.getMaxcdt().has("data"));
+		if (conv.getMaxcdt().has("data"))
+			assertEquals("Data array not empty in Max condition object", 0, conv.getMaxcdt().get("data").getAsJsonArray().size());
+		
 		
 	}
 
-//	@Test
-//	public void testB_ParseReaction() {
-//		fail("Not yet implemented"); // TODO
-//	}
-//
-//	@Test
-//	public void testC_AddLink() {
-//		fail("Not yet implemented"); // TODO
-//	}
-//
-//	@Test
-//	public void testD_GetAdditionalInfoInNote() {
-//		fail("Not yet implemented"); // TODO
-//	}
-//
-//	@Test
-//	public void testE_CreateReactionNode() {
-//		fail("Not yet implemented"); // TODO
-//	}
-//
-//	@Test
-//	public void testF_CreateMetaboliteNode() {
-//		fail("Not yet implemented"); // TODO
-//	}
-//
-//	@Test
-//	public void testD_WriteJsonToFile() {
-//		fail("Not yet implemented"); // TODO
-//	}
+	@Test
+	public void testC_AddLink() {
+
+		int initialL = conv.getLinks().size();
+		conv.addLink(10, 11, "in", true);
+
+		assertEquals("Link not added", initialL + 1, conv.getLinks().size());
+		if (conv.getLinks().size() == initialL + 1) {
+			JsonObject lastlink = conv.getLinks().get(initialL).getAsJsonObject();
+
+			assertTrue("No id in added Link", lastlink.has("id"));
+			if (lastlink.has("id"))
+				assertEquals("Incorrect id in added Link", "10 -- 11", lastlink.get("id").getAsString());
+
+			assertTrue("No source in added Link", lastlink.has("source"));
+			if (lastlink.has("source"))
+				assertEquals("Incorrect source in added Link", 10, lastlink.get("source").getAsInt());
+
+			assertTrue("No target in added Link", lastlink.has("target"));
+			if (lastlink.has("target"))
+				assertEquals("Incorrect target in added Link", 11, lastlink.get("target").getAsInt());
+
+			assertTrue("No interaction in added Link", lastlink.has("interaction"));
+			if (lastlink.has("interaction"))
+				assertEquals("Incorrect interaction in added Link", "in", lastlink.get("interaction").getAsString());
+
+			assertTrue("No 'reversible' attribute in added Link", lastlink.has("reversible"));
+			if (lastlink.has("reversible"))
+				assertEquals("Incorrect reversible in added Link", true, lastlink.get("reversible").getAsBoolean());
+
+			conv.getLinks().remove(lastlink);
+			assertEquals("Link not removed", initialL, conv.getLinks().size());
+		}
+	}
+
+	@Test
+	public void testD_createMetaboliteNode() {
+		Species s = inputDummy.getSpecies();
+		JsonObject so = conv.createMetaboliteNode(s);
+
+		assertTrue("No biologicalType in created Metabolite Node", so.has("biologicalType"));
+		if (so.has("biologicalType"))
+			assertEquals("Incorrect interaction in added Metabolite Node", "metabolite",so.get("biologicalType").getAsString());
+
+		assertTrue("No name in created Metabolite Node", so.has("name"));
+		if (so.has("name"))
+			assertEquals("Incorrect name in added Metabolite Node", s.getName(), so.get("name").getAsString());
+
+		assertTrue("No dbIdentifier in created Metabolite Node", so.has("dbIdentifier"));
+		if (so.has("dbIdentifier"))
+			assertEquals("Incorrect dbIdentifier in added Metabolite Node", s.getId(), so.get("dbIdentifier").getAsString());
+
+		assertTrue("No compartment in created Metabolite Node", so.has("compartment"));
+		if (so.has("compartment"))
+			assertEquals("Incorrect compartment in added Metabolite Node", s.getCompartmentInstance().getName(),so.get("compartment").getAsString());
+
+		assertTrue("No 'isSideCompound' attribute in created Metabolite Node", so.has("isSideCompound"));
+		if (so.has("isSideCompound"))
+			assertEquals("Incorrect isSideCompound in added Metabolite Node", false,so.get("isSideCompound").getAsBoolean());
+
+		assertTrue("No 'svg' attribute in created Metabolite Node", so.has("svg"));
+		if (so.has("svg"))
+			assertEquals("Incorrect svg in added Metabolite Node", "", so.get("svg").getAsString());
+
+		assertTrue("No 'svgWidth' attribute in created Metabolite Node", so.has("svgWidth"));
+		if (so.has("svgWidth"))
+			assertEquals("Incorrect svgWidth in added Metabolite Node", "0", so.get("svgWidth").getAsString());
+
+		assertTrue("No 'svgHeight' attribute in created Metabolite Node", so.has("svgHeight"));
+		if (so.has("svgHeight"))
+			assertEquals("Incorrect svgHeight in added Metabolite Node", "0", so.get("svgHeight").getAsString());
+
+	}
+
+	 @Test
+	 public void testE_createReactionNode() {
+		 
+		Reaction r=inputDummy.getRxn();
+		JsonObject so = conv.createReactionNode(r);
+		
+		assertTrue("No 'biologicalType' attribute in created Reaction Node", so.has("biologicalType"));
+		if (so.has("biologicalType"))
+			assertEquals("Incorrect biologicalType in added Reaction Node", "reaction", so.get("biologicalType").getAsString());
+			
+		assertTrue("No dbIdentifier in created Reaction Node", so.has("dbIdentifier"));
+		if (so.has("dbIdentifier"))
+			assertEquals("Incorrect name in added Reaction Node", r.getId(), so.get("dbIdentifier").getAsString()); 
+		
+		assertTrue("No name in created Reaction Node", so.has("name"));
+		if (so.has("name"))
+			assertEquals("Incorrect name in added Reaction Node", r.getName(), so.get("name").getAsString()); 
+		 
+		assertTrue("No 'reactionReversibility' attribute in created Reaction Node", so.has("reactionReversibility"));
+		if (so.has("name"))
+			assertEquals("Incorrect 'reactionReversibility' attribute in added Reaction Node", r.getReversible(), so.get("reactionReversibility").getAsBoolean()); 
+		 
+		JsonObject cdt=conv.getMincdt();
+		assertEquals("Wrong number of data in min condition", 1, cdt.get("data").getAsJsonArray().size());
+		if ( cdt.get("data").getAsJsonArray().size()==1){
+			JsonObject mapp=cdt.get("data").getAsJsonArray().get(0).getAsJsonObject();
+			
+			assertTrue("No node in mapping test data", mapp.has("node"));
+			if (mapp.has("node"))
+				assertEquals("Incorrect node in mapping test data", r.getId(), mapp.get("node").getAsString());
+			
+			assertTrue("No value in mapping test data", mapp.has("value"));
+			if (mapp.has("value"))
+				assertEquals("Incorrect name in mapping test data", 0.0, mapp.get("value").getAsDouble(), 0);
+		}
+		
+		cdt=conv.getMaxcdt();
+		assertEquals("Wrong number of data in min condition", 1, cdt.get("data").getAsJsonArray().size());
+		if ( cdt.get("data").getAsJsonArray().size()==1){
+			JsonObject mapp=cdt.get("data").getAsJsonArray().get(0).getAsJsonObject();
+			
+			assertTrue("No node in mapping test data", mapp.has("node"));
+			if (mapp.has("node"))
+				assertEquals("Incorrect node in mapping test data", r.getId(), mapp.get("node").getAsString());
+			
+			assertTrue("No value in mapping test data", mapp.has("value"));
+			if (mapp.has("value"))
+				assertEquals("Incorrect name in mapping test data", 0.0, mapp.get("value").getAsDouble(), 0);
+		}
+		
+	 }
+	 
+	 @Test
+	 public void testF_parseReaction(){
+		 conv.setModel(inputDummy.getModel());
+//		 conv.parseReaction();
+//		 
+//		 assertEquals("",conv.getNodes().size());
+//		 System.out.println(conv.getNodes());
+//		 System.out.println(conv.getLinks());
+	 }
+
+	@Test
+	 public void testG_addMapping(){
+		 //conv.addMappings();
+		 
+	 }
+
+	
+	//
+	// @Test
+	// public void testD_WriteJsonToFile() {
+	// fail("Not yet implemented"); // TODO
+	// }
 
 }
