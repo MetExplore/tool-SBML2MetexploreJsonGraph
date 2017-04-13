@@ -3,7 +3,6 @@ package phnmnl.tests.utils;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import org.junit.Test;
 import org.sbml.jsbml.Model;
 
 import com.google.gson.JsonArray;
