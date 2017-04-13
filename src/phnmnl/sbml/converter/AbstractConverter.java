@@ -32,9 +32,6 @@ public abstract class AbstractConverter {
 
 	protected HashMap<String, Integer> indexMap = new HashMap<String, Integer>();
 
-	public AbstractConverter() {
-	}
-
 	public AbstractConverter(Model m) {
 		this.model = m;
 
@@ -196,7 +193,7 @@ public abstract class AbstractConverter {
 
 	protected void getAdditionalInfoInNote(JsonObject jobj, SBase sbase) throws XMLStreamException {
 		String n=sbase.getNotesString();
-		if(!n.isEmpty())
+//		if(!n.isEmpty())
 			NoteReader.parseSBaseNotes(jobj, n);
 	}
 
@@ -205,14 +202,21 @@ public abstract class AbstractConverter {
 	public abstract JsonObject createReactionNode(Reaction jSBMLReaction);
 
 	public void writeJsonToFile(String outputFileName) {
-
-		try (FileWriter file = new FileWriter(outputFileName)) {
-
+		FileWriter file = null;
+		try {
+			file = new FileWriter(outputFileName);
 			file.write(this.getJson().toString());
 			file.flush();
 
 		} catch (IOException e) {
 			e.printStackTrace();
+			
+		}finally{
+			try {
+				file.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 

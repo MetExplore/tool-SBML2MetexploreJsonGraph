@@ -8,7 +8,7 @@ import com.google.gson.JsonObject;
 
 import phnmnl.sbml.NoteReader;
 
-public class TestNotesReader {
+public class Test2_NotesReader {
 
 	@Test
 	public final void testParseSBaseNotes_OnePathway() {

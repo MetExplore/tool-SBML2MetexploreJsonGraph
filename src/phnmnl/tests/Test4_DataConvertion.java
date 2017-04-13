@@ -2,6 +2,9 @@ package phnmnl.tests;
 
 import static org.junit.Assert.*;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
@@ -21,22 +24,22 @@ import phnmnl.sbml.converter.AbstractConverter;
 import phnmnl.sbml.converter.FBC2toJsonConverter;
 import phnmnl.sbml.converter.SBML2jsonConverter;
 import phnmnl.tests.utils.MiniRec2TestData;
-import phnmnl.tests.utils.TestData;
+import phnmnl.tests.utils.TemplateTestData;
 import phnmnl.tests.utils.UbFluxNetTestData;
 
 @RunWith(Parameterized.class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class TestDataConvertion {
+public class Test4_DataConvertion {
 
 	public static AbstractConverter conv;
 
 	@Parameters
-	public static Collection<TestData[]> data() {
-		return Arrays.asList(new TestData[][] { { new MiniRec2TestData() }, { new UbFluxNetTestData() } });
+	public static Collection<TemplateTestData[]> data() {
+		return Arrays.asList(new TemplateTestData[][] { { new MiniRec2TestData() }, { new UbFluxNetTestData() } });
 	}
 
 	@Parameter(0)
-	public TestData data;
+	public TemplateTestData data;
 
 	@Test
 	public final void testA_constructor() throws XMLStreamException, IOException {
@@ -54,7 +57,6 @@ public class TestDataConvertion {
 
 	@Test
 	public void testB_Convert() {
-
 		conv.convert();
 		assertNotNull("converted Json is null", conv.getJson());
 		data.setJson(conv.getJson());
@@ -63,8 +65,20 @@ public class TestDataConvertion {
 	}
 	
 	@Test
-	public void testC_WriteFile(){
+	public void testC_WriteFile() throws IOException{
+		conv.writeJsonToFile(data.getOutputFile());
 		
+		BufferedReader br = new BufferedReader(new FileReader(data.getOutputFile()));
+	    try {
+	    	assertTrue("output File was not written",br.ready());
+
+	    } finally {
+	        if (br != null) br.close();
+	        
+	        File file = new File(data.getOutputFile());
+	        boolean deleted=file.delete();
+    		assertTrue("Unable to delete test output file",deleted);
+	    }
 	}
 
 }

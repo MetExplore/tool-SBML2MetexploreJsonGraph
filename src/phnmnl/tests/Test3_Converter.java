@@ -30,7 +30,7 @@ import phnmnl.tests.utils.Lvl2Dummy;
 
 @RunWith(Parameterized.class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class TestConverter {
+public class Test3_Converter {
 
 	public static AbstractConverter conv;
 

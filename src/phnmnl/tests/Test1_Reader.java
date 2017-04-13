@@ -19,23 +19,23 @@ import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
 
 import phnmnl.sbml.Reader;
-import phnmnl.tests.utils.TestData;
+import phnmnl.tests.utils.TemplateTestData;
 import phnmnl.tests.utils.MiniRec2TestData;
 import phnmnl.tests.utils.UbFluxNetTestData;
 
 @RunWith(Parameterized.class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class TestReader {
+public class Test1_Reader {
 
 	public static Reader tester;
 
 	@Parameters
-	public static Collection<TestData[]> data() {
-		return Arrays.asList(new TestData[][] { { new MiniRec2TestData() }, { new UbFluxNetTestData() } });
+	public static Collection<TemplateTestData[]> data() {
+		return Arrays.asList(new TemplateTestData[][] { { new MiniRec2TestData() }, { new UbFluxNetTestData() } });
 	}
 
 	@Parameter(0)
-	public TestData inputDummy;
+	public TemplateTestData inputDummy;
 
 	@Test
 	public void testA_ReaderString() {

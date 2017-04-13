@@ -140,6 +140,11 @@ public class Lvl2Dummy implements Dummy {
 	public String getOutputFile() {
 		return null;
 	}
+	
+	@Override
+	public String getExpectedOutput() {
+		return null;
+	}
 
 
 	@Override

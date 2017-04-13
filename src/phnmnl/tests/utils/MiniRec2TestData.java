@@ -9,37 +9,34 @@ import org.sbml.jsbml.Model;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
-public class MiniRec2TestData implements TestData {
+public class MiniRec2TestData implements TemplateTestData {
 
 	private Model model;
-	
-	
+
 	private static final boolean isFbc = false;
 	private static final int nbReactions = 1;
 	private static final int nbMetabolites = 5;
 	private static final int nbCompartments = 1;
 
 	private static final String inputFile = "tests/inputData/miniRec2.xml";
-	private static final String outputFile = "tests/outputData/ExpectedminiRec2.json";
+	private static final String outputFile = "tests/outputData/miniRec2.json";
+	private static final String ExpectedOutputFile = "tests/outputData/ExpectedminiRec2.json";
 
 	private JsonObject json;
 	private static final int nbNodes = 6;
 	private static final int nbLinks = 5;
 	private static final boolean hasMappings = true;
 	private static final int[] nbMappings = { 1, 1 };
-	
-	
-	
-	@Test
+
 	@Override
 	public void testModel() {
-		Model m=this.getModel();
+		Model m = this.getModel();
 		assertEquals("Incorrect Number of compartments", this.getNbCompartments(), m.getNumCompartments());
 		assertEquals("Incorrect Number of metabolites", this.getNbMetabolites(), m.getNumSpecies());
 		assertEquals("Incorrect Number of reactions", this.getNbReactions(), m.getNumReactions());
-		
+
 	}
-	
+
 	@Override
 	public Model getModel() {
 		return this.model;
@@ -47,7 +44,7 @@ public class MiniRec2TestData implements TestData {
 
 	@Override
 	public void setModel(Model model) {
-		this.model=model;
+		this.model = model;
 	}
 
 	@Override
@@ -76,11 +73,15 @@ public class MiniRec2TestData implements TestData {
 	}
 
 	@Override
+	public String getExpectedOutput() {
+		return MiniRec2TestData.ExpectedOutputFile;
+	}
+
+	@Override
 	public boolean isFbc() {
 		return MiniRec2TestData.isFbc;
 	}
 
-	
 	@Override
 	public JsonObject getJson() {
 		return this.json;
@@ -88,14 +89,14 @@ public class MiniRec2TestData implements TestData {
 
 	@Override
 	public void setJson(JsonObject j) {
-		this.json=j;
+		this.json = j;
 	}
 
-	@Test
+	
 	@Override
 	public void testJson() {
-		
-		JsonObject j=this.getJson();
+
+		JsonObject j = this.getJson();
 
 		assertTrue("No nodes in json", j.has("nodes"));
 		if (j.has("nodes"))
@@ -123,18 +124,20 @@ public class MiniRec2TestData implements TestData {
 					assertEquals("Wrong Name of Mapping n°1", "reactionId", m.get("targetLabel").getAsString());
 
 				assertTrue("No condition in Mapping n°1", m.has("mappings"));
-				if (m.has("mappings")){
-					
-					int n=this.getNbMappingsCdt();
-					assertEquals("Wrong number of conditions in Mapping n°1", n, m.get("mappings").getAsJsonArray().size());
-					if(m.get("mappings").getAsJsonArray().size()==n){
-						for (int i=0; i<n ; i++){
-							JsonObject c=m.get("mappings").getAsJsonArray().get(i).getAsJsonObject();
-							
-							assertTrue("No data in condition "+i+" of Mapping n°1", c.has("data"));
-							if(c.has("data")){
+				if (m.has("mappings")) {
+
+					int n = this.getNbMappingsCdt();
+					assertEquals("Wrong number of conditions in Mapping n°1", n,
+							m.get("mappings").getAsJsonArray().size());
+					if (m.get("mappings").getAsJsonArray().size() == n) {
+						for (int i = 0; i < n; i++) {
+							JsonObject c = m.get("mappings").getAsJsonArray().get(i).getAsJsonObject();
+
+							assertTrue("No data in condition " + i + " of Mapping n°1", c.has("data"));
+							if (c.has("data")) {
 								JsonArray data = c.get("data").getAsJsonArray();
-								assertEquals("Wrong number of data in condition "+i,this.getNbMappingsData(i),data.size());
+								assertEquals("Wrong number of data in condition " + i, this.getNbMappingsData(i),
+										data.size());
 							}
 						}
 					}

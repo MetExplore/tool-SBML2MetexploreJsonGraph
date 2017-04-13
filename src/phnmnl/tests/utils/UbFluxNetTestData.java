@@ -3,13 +3,12 @@ package phnmnl.tests.utils;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import org.junit.Test;
 import org.sbml.jsbml.Model;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
-public class UbFluxNetTestData implements TestData {
+public class UbFluxNetTestData implements TemplateTestData {
 
 	private Model model;
 	
@@ -19,7 +18,8 @@ public class UbFluxNetTestData implements TestData {
 	private static final int nbCompartments = 1;
 
 	private static final String inputFile = "tests/inputData/ubFluxNet.sbml";
-	private static final String outputFile = "tests/outputData/ExpectedUbFluxNet.sbml";
+	private static final String outputFile = "tests/outputData/UbFluxNet.json";
+	private static final String ExpectedOutputFile="tests/outputData/ExpectedUbFluxNet.json";
 	
 	private JsonObject json;
 	private static final int nbNodes = 34;
@@ -40,7 +40,7 @@ public class UbFluxNetTestData implements TestData {
 		this.model=model;
 	}
 	
-	@Test
+	@Override
 	public void testModel() {
 		Model m=this.getModel();
 		assertEquals("Incorrect Number of compartments", this.getNbCompartments(), m.getNumCompartments());
@@ -72,6 +72,11 @@ public class UbFluxNetTestData implements TestData {
 	public String getOutputFile() {
 		return UbFluxNetTestData.outputFile;
 	}
+	
+	@Override
+	public String getExpectedOutput() {
+		return UbFluxNetTestData.ExpectedOutputFile;
+	}
 
 	@Override
 	public boolean isFbc() {
@@ -89,7 +94,6 @@ public class UbFluxNetTestData implements TestData {
 	}
 
 	@Override
-	@Test
 	public void testJson() {
 
 		JsonObject j=this.getJson();

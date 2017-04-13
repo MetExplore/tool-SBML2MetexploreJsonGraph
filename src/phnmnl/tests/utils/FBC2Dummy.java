@@ -154,6 +154,12 @@ public class FBC2Dummy implements Dummy {
 
 
 	@Override
+	public String getExpectedOutput() {
+		return null;
+	}
+
+
+	@Override
 	public int getNbNodes() {
 		
 		return nbNodes;
