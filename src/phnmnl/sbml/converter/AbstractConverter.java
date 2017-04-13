@@ -32,9 +32,6 @@ public abstract class AbstractConverter {
 
 	protected HashMap<String, Integer> indexMap = new HashMap<String, Integer>();
 
-	public AbstractConverter() {
-	}
-
 	public AbstractConverter(Model m) {
 		this.model = m;
 
@@ -53,7 +50,7 @@ public abstract class AbstractConverter {
 		this.addMappings();
 	}
 
-	private void initializeMappingArray() {
+	public void initializeMappingArray() {
 
 		mincdt.addProperty("name", "Min");
 		mincdt.add("data", new JsonArray());
@@ -157,7 +154,7 @@ public abstract class AbstractConverter {
 	 * @param dir
 	 * @param reversible
 	 */
-	protected void addLink(int idSource, int idTarget, String dir, boolean reversible) {
+	public void addLink(int idSource, int idTarget, String dir, boolean reversible) {
 		JsonObject link = new JsonObject();
 
 		link.addProperty("id", idSource + " -- " + idTarget);
@@ -169,7 +166,7 @@ public abstract class AbstractConverter {
 		links.add(link);
 	}
 
-	private void addMappings() {
+	public void addMappings() {
 
 		JsonArray mappingsdata = new JsonArray();
 
@@ -188,30 +185,38 @@ public abstract class AbstractConverter {
 
 		}
 
-		// TODO add mapping on metabolites if any
 		if(mappingsdata.size() != 0 ){
 			this.json.add("mappingdata", mappingsdata);
 		}
 
 	}
 
-	protected void getAdditionalInfoInNote(JsonObject rxn, SBase jSBMLReaction) throws XMLStreamException {
-		NoteReader.parseReactionNotes(rxn, jSBMLReaction.getNotesString());
+	protected void getAdditionalInfoInNote(JsonObject jobj, SBase sbase) throws XMLStreamException {
+		String n=sbase.getNotesString();
+//		if(!n.isEmpty())
+			NoteReader.parseSBaseNotes(jobj, n);
 	}
 
-	protected abstract JsonObject createMetaboliteNode(Species s);
+	public abstract JsonObject createMetaboliteNode(Species s);
 
-	protected abstract JsonObject createReactionNode(Reaction jSBMLReaction);
+	public abstract JsonObject createReactionNode(Reaction jSBMLReaction);
 
 	public void writeJsonToFile(String outputFileName) {
-
-		try (FileWriter file = new FileWriter(outputFileName)) {
-
+		FileWriter file = null;
+		try {
+			file = new FileWriter(outputFileName);
 			file.write(this.getJson().toString());
 			file.flush();
 
 		} catch (IOException e) {
 			e.printStackTrace();
+			
+		}finally{
+			try {
+				file.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -221,6 +226,54 @@ public abstract class AbstractConverter {
 
 	public void setJson(JsonObject json) {
 		this.json = json;
+	}
+
+	public Model getModel() {
+		return model;
+	}
+
+	public void setModel(Model model) {
+		this.model = model;
+	}
+
+	public JsonArray getNodes() {
+		return nodes;
+	}
+
+	public void setNodes(JsonArray nodes) {
+		this.nodes = nodes;
+	}
+
+	public JsonArray getLinks() {
+		return links;
+	}
+
+	public void setLinks(JsonArray links) {
+		this.links = links;
+	}
+
+	public JsonObject getMincdt() {
+		return mincdt;
+	}
+
+	public void setMincdt(JsonObject mincdt) {
+		this.mincdt = mincdt;
+	}
+
+	public JsonObject getMaxcdt() {
+		return maxcdt;
+	}
+
+	public void setMaxcdt(JsonObject maxcdt) {
+		this.maxcdt = maxcdt;
+	}
+
+	public HashMap<String, Integer> getIndexMap() {
+		return indexMap;
+	}
+
+	public void setIndexMap(HashMap<String, Integer> indexMap) {
+		this.indexMap = indexMap;
 	}
 
 }

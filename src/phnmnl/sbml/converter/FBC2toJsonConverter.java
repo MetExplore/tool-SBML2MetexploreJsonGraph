@@ -19,7 +19,7 @@ public class FBC2toJsonConverter extends AbstractConverter {
 	}
 
 	@Override
-	protected JsonObject createReactionNode(Reaction r) {
+	public JsonObject createReactionNode(Reaction r) {
 		
 		JsonObject rxn=new JsonObject();
 		
@@ -54,7 +54,7 @@ public class FBC2toJsonConverter extends AbstractConverter {
 	}
 
 	@Override
-	protected JsonObject createMetaboliteNode(Species s) {
+	public JsonObject createMetaboliteNode(Species s) {
 		JsonObject met=new JsonObject();
 		
 		met.addProperty("biologicalType","metabolite");
