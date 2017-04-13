@@ -16,7 +16,7 @@ public class Reader {
 	private boolean validate;
 
 	public Reader (String filename){
-		this.file=filename;
+		this.setFile(filename);
 		
 	}
 	
@@ -32,7 +32,7 @@ public class Reader {
 		
 		SBMLDocument doc=SBMLReader.read(sbmlFile);
 		
-		this.model= doc.getModel();
+		this.setModel(doc.getModel());
 	}
 	
 	public boolean isFBCModel(){

@@ -1,0 +1,158 @@
+{
+	"nodes": [
+		{
+			"biologicalType": "reaction",
+			"name": "RE3108",
+			"dbIdentifier": "R_RE3108C",
+			"reactionReversibility": true,
+			"pathways": [
+				"Androgen and estrogen synthesis and metabolism"
+			],
+			"ec": "1.1.1.50",
+			"id": 0
+		},
+		{
+			"biologicalType": "metabolite",
+			"name": "Nicotinamide adenine dinucleotide phosphate",
+			"dbIdentifier": "M_nadp_c",
+			"compartment": "cytoplasm",
+			"isSideCompound": false,
+			"formula": "C21H25N7O17P3",
+			"charge": "-3",
+			"svg": "",
+			"svgWidth": "0",
+			"svgHeight": "0",
+			"id": 1,
+			"pathways": [
+				"Androgen and estrogen synthesis and metabolism"
+			]
+		},
+		{
+			"biologicalType": "metabolite",
+			"name": "5alpha-androstane-3alpha,17beta-diol",
+			"dbIdentifier": "M_CE2209_c",
+			"compartment": "cytoplasm",
+			"isSideCompound": false,
+			"formula": "C19H32O2",
+			"charge": "0",
+			"svg": "",
+			"svgWidth": "0",
+			"svgHeight": "0",
+			"id": 2,
+			"pathways": [
+				"Androgen and estrogen synthesis and metabolism"
+			]
+		},
+		{
+			"biologicalType": "metabolite",
+			"name": "proton",
+			"dbIdentifier": "M_h_c",
+			"compartment": "cytoplasm",
+			"isSideCompound": false,
+			"formula": "H",
+			"charge": "1",
+			"svg": "",
+			"svgWidth": "0",
+			"svgHeight": "0",
+			"id": 3,
+			"pathways": [
+				"Androgen and estrogen synthesis and metabolism"
+			]
+		},
+		{
+			"biologicalType": "metabolite",
+			"name": "17beta-hydroxy-5alpha-androstan-3-one",
+			"dbIdentifier": "M_5adtststerone_c",
+			"compartment": "cytoplasm",
+			"isSideCompound": false,
+			"formula": "C19H30O2",
+			"charge": "0",
+			"svg": "",
+			"svgWidth": "0",
+			"svgHeight": "0",
+			"id": 4,
+			"pathways": [
+				"Androgen and estrogen synthesis and metabolism"
+			]
+		},
+		{
+			"biologicalType": "metabolite",
+			"name": "Nicotinamide adenine dinucleotide phosphate - reduced",
+			"dbIdentifier": "M_nadph_c",
+			"compartment": "cytoplasm",
+			"isSideCompound": false,
+			"formula": "C21H26N7O17P3",
+			"charge": "-4",
+			"svg": "",
+			"svgWidth": "0",
+			"svgHeight": "0",
+			"id": 5,
+			"pathways": [
+				"Androgen and estrogen synthesis and metabolism"
+			]
+		}
+	],
+	"links": [
+		{
+			"id": "1 -- 0",
+			"source": 1,
+			"target": 0,
+			"interaction": "in",
+			"reversible": "true"
+		},
+		{
+			"id": "2 -- 0",
+			"source": 2,
+			"target": 0,
+			"interaction": "in",
+			"reversible": "true"
+		},
+		{
+			"id": "0 -- 3",
+			"source": 0,
+			"target": 3,
+			"interaction": "out",
+			"reversible": "true"
+		},
+		{
+			"id": "0 -- 4",
+			"source": 0,
+			"target": 4,
+			"interaction": "out",
+			"reversible": "true"
+		},
+		{
+			"id": "0 -- 5",
+			"source": 0,
+			"target": 5,
+			"interaction": "out",
+			"reversible": "true"
+		}
+	],
+	"mappingdata": [
+		{
+			"name": "Flux",
+			"targetLabel": "reactionId",
+			"mappings": [
+				{
+					"name": "Min",
+					"data": [
+						{
+							"node": "R_RE3108C",
+							"value": -1000.0
+						}
+					]
+				},
+				{
+					"name": "Max",
+					"data": [
+						{
+							"node": "R_RE3108C",
+							"value": 1000.0
+						}
+					]
+				}
+			]
+		}
+	]
+}
