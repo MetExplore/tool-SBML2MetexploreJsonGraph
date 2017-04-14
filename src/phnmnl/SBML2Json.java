@@ -23,6 +23,9 @@ public class SBML2Json {
 	
 	@Option(name = "-validate", usage = "Validate input SBML file. Default to false")
 	public boolean useValidator=false;
+	
+	@Option(name = "-flux2Mapp", usage = "Convert Flux data contained in the SBML as mapping data")
+	public boolean fluxNet=false;
 
 	@Option(name = "-outFile", usage = "[Required] Output json file name.", required = true)
 	public String outFile;
@@ -61,9 +64,9 @@ public class SBML2Json {
 			AbstractConverter conv;
 			
 			if(r.isFBCModel()){
-				conv=new FBC2toJsonConverter(r.getModel());
+				conv=new FBC2toJsonConverter(r.getModel(),this.fluxNet);
 			}else{
-				conv=new SBML2jsonConverter(r.getModel());
+				conv=new SBML2jsonConverter(r.getModel(),this.fluxNet);
 			}
 			
 			conv.convert();

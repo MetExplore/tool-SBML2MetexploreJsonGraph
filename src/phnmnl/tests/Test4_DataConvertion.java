@@ -47,9 +47,9 @@ public class Test4_DataConvertion {
 
 		r.read();
 		if (r.isFBCModel()) {
-			conv = new FBC2toJsonConverter(r.getModel());
+			conv = new FBC2toJsonConverter(r.getModel(),true);
 		} else {
-			conv = new SBML2jsonConverter(r.getModel());
+			conv = new SBML2jsonConverter(r.getModel(),true);
 		}
 
 		assertNotNull("Converter is null", conv);
