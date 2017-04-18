@@ -114,25 +114,25 @@ public class MiniRec2TestData implements TemplateTestData {
 			if (mappings.size() == 1) {
 				JsonObject m = mappings.get(0).getAsJsonObject();
 
-				assertTrue("No name in Mapping n°1", m.has("name"));
+				assertTrue("No name in Mapping 1", m.has("name"));
 				if (m.has("name"))
-					assertEquals("Wrong Name of Mapping n°1", "Flux", m.get("name").getAsString());
+					assertEquals("Wrong Name of Mapping 1", "Flux", m.get("name").getAsString());
 
-				assertTrue("No TargetLabel in Mapping n°1", m.has("targetLabel"));
+				assertTrue("No TargetLabel in Mapping 1", m.has("targetLabel"));
 				if (m.has("targetLabel"))
-					assertEquals("Wrong Name of Mapping n°1", "reactionId", m.get("targetLabel").getAsString());
+					assertEquals("Wrong Name of Mapping 1", "reactionId", m.get("targetLabel").getAsString());
 
-				assertTrue("No condition in Mapping n°1", m.has("mappings"));
+				assertTrue("No condition in Mapping 1", m.has("mappings"));
 				if (m.has("mappings")) {
 
 					int n = this.getNbMappingsCdt();
-					assertEquals("Wrong number of conditions in Mapping n°1", n,
+					assertEquals("Wrong number of conditions in Mapping 1", n,
 							m.get("mappings").getAsJsonArray().size());
 					if (m.get("mappings").getAsJsonArray().size() == n) {
 						for (int i = 0; i < n; i++) {
 							JsonObject c = m.get("mappings").getAsJsonArray().get(i).getAsJsonObject();
 
-							assertTrue("No data in condition " + i + " of Mapping n°1", c.has("data"));
+							assertTrue("No data in condition " + i + " of Mapping 1", c.has("data"));
 							if (c.has("data")) {
 								JsonArray data = c.get("data").getAsJsonArray();
 								assertEquals("Wrong number of data in condition " + i, this.getNbMappingsData(i),
