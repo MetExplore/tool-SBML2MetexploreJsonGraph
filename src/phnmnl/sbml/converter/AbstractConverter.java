@@ -24,6 +24,8 @@ public abstract class AbstractConverter {
 
 	protected JsonArray nodes = new JsonArray();
 	protected JsonArray links = new JsonArray();
+	
+	protected boolean convertFlux=false;
 
 	/**
 	 * The two flux conditions
@@ -35,6 +37,11 @@ public abstract class AbstractConverter {
 	public AbstractConverter(Model m) {
 		this.model = m;
 
+	}
+	
+	public AbstractConverter(Model m, boolean convertFlux) {
+		this.model = m;
+		this.convertFlux=convertFlux;
 	}
 
 	public void convert() {

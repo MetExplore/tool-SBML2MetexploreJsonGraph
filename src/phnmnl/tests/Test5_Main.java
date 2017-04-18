@@ -45,7 +45,7 @@ public class Test5_Main {
 	@Test
 	public void testA_args() throws IOException {
 		
-		String[] args= { "-inFile", data.getInputFile(), "-outFile", data.getOutputFile() };
+		String[] args= { "-inFile", data.getInputFile(),"-flux2Mapp", "-outFile", data.getOutputFile() };
 
 		SBML2Json.main(args);
 
@@ -74,26 +74,6 @@ public class Test5_Main {
 		
 		JsonTestUtils.test(expectedOutput, output);
 		
-//		assertTrue(output.has("nodes"));
-//		assertTrue(expectedOutput.has("nodes"));
-//		if(output.has("nodes") && expectedOutput.has("nodes")){
-//			
-//			
-//			JsonTestUtils.test(output.get("nodes"),expectedOutput.get("nodes"));
-////			assertEquals("",output.get("nodes").getAsJsonArray().size(),expectedOutput.get("nodes").getAsJsonArray().size());
-//			
-//		}
-		
 	}
-	
-//	@Test
-//	public void testC_links() {
-////		assertTrue(output.h)
-//	}
-//	
-//	@Test
-//	public void testD_Mappings() {
-////		assertTrue(output.h)
-//	}
 
 }

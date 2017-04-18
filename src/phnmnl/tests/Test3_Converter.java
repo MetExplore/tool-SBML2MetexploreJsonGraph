@@ -46,9 +46,9 @@ public class Test3_Converter {
 	public void testA_constructor() throws XMLStreamException, IOException {
 
 		if (inputDummy.isFbc()) {
-			conv = new FBC2toJsonConverter(inputDummy.getModel());
+			conv = new FBC2toJsonConverter(inputDummy.getModel(),true);
 		} else {
-			conv = new SBML2jsonConverter(inputDummy.getModel());
+			conv = new SBML2jsonConverter(inputDummy.getModel(), true);
 		}
 
 		assertNotNull("Converter is null", conv);

@@ -14,6 +14,10 @@ public class SBML2jsonConverter extends AbstractConverter {
 	public SBML2jsonConverter(Model m){
 		super (m);
 	}
+	
+	public SBML2jsonConverter(Model m,boolean convertFlux){
+		super(m, convertFlux);
+	}
 
 	@Override
 	public JsonObject createReactionNode(Reaction r) {
@@ -30,7 +34,7 @@ public class SBML2jsonConverter extends AbstractConverter {
 			e.printStackTrace();
 		}
 		
-		if(r.isSetKineticLaw()){
+		if(this.convertFlux && r.isSetKineticLaw()){
 			for(LocalParameter p: r.getKineticLaw().getListOfLocalParameters()){
 				if(p.getId().equalsIgnoreCase("UPPER_BOUND")){
 					JsonObject ub=new JsonObject();
