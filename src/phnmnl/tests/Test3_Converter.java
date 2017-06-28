@@ -247,7 +247,11 @@ public class Test3_Converter {
 				
 				assertTrue("No 'targetLabel' attribute in mapping test data", map.has("targetLabel"));
 				if (map.has("targetLabel"))
-					assertEquals("Incorrect 'targetLabel' attribute in mapping test data","reactionId", map.get("targetLabel").getAsString());
+					assertEquals("Incorrect 'targetLabel' attribute in mapping test data","reactionDBIdentifier", map.get("targetLabel").getAsString());
+				
+				assertTrue("No 'object' attribute in mapping test data", map.has("object"));
+				if (map.has("object"))
+					assertEquals("Incorrect 'object' attribute in mapping test data","Reaction", map.get("object").getAsString());
 				
 				assertTrue("No condition data in mapping test data", map.has("mappings"));
 				if (map.has("mappings")){

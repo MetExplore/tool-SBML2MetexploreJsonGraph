@@ -625,7 +625,8 @@
 	"mappingdata": [
 		{
 			"name": "Flux",
-			"targetLabel": "reactionId",
+			"object": "Reaction",
+			"targetLabel": "reactionDBIdentifier",
 			"mappings": [
 				{
 					"name": "Min",
