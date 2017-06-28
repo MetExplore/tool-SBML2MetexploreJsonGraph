@@ -181,7 +181,8 @@ public abstract class AbstractConverter {
 			JsonObject mapp = new JsonObject();
 
 			mapp.addProperty("name", "Flux");
-			mapp.addProperty("targetLabel", "reactionId");
+			mapp.addProperty("object", "Reaction");
+			mapp.addProperty("targetLabel", "reactionDBIdentifier");
 
 			JsonArray mappingsCond = new JsonArray();
 			mappingsCond.add(mincdt);
