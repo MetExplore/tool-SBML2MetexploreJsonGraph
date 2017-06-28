@@ -121,7 +121,11 @@ public class UbFluxNetTestData implements TemplateTestData {
 
 				assertTrue("No TargetLabel in Mapping 1", m.has("targetLabel"));
 				if (m.has("targetLabel"))
-					assertEquals("Wrong Name of Mapping 1", "reactionId", m.get("targetLabel").getAsString());
+					assertEquals("Wrong targetLabel of Mapping 1", "reactionDBIdentifier", m.get("targetLabel").getAsString());
+				
+				assertTrue("No 'object' in Mapping 1", m.has("object"));
+				if (m.has("object"))
+					assertEquals("Wrong object of Mapping 1", "Reaction", m.get("object").getAsString());
 
 				assertTrue("No condition in Mapping 1", m.has("mappings"));
 				if (m.has("mappings")){
